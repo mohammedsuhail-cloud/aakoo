@@ -40,6 +40,8 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -47,6 +49,7 @@ body {
   color: var(--color-white);
   font-family: var(--font-body);
   line-height: 1.6;
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -376,12 +379,13 @@ body::before {
 /* --- HERO SECTION --- */
 .hero-section {
   min-height: 100vh;
+  max-height: 1000px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding-top: 5rem;
+  padding: clamp(5rem, 8vh, 8rem) 2rem clamp(3rem, 5vh, 5rem) 2rem;
 }
 .hero-canvas {
   position: absolute;
@@ -417,20 +421,20 @@ body::before {
   padding: 0.6rem 1.5rem;
   border-radius: 50px;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: clamp(0.7rem, 1.2vw, 0.85rem);
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--color-white);
-  margin-bottom: 2.25rem;
+  margin-bottom: clamp(1.25rem, 3.5vh, 2.25rem);
   box-shadow: 0 0 10px rgba(255, 46, 0, 0.2);
   animation: badgeBorderGlow 2.5s infinite alternate ease-in-out;
 }
 .hero-title {
   font-family: var(--font-heading);
-  font-size: 7.5rem;
-  line-height: 0.9;
-  letter-spacing: 6px;
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.2rem, 7.5vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: clamp(2px, 0.4vw, 6px);
+  margin-bottom: clamp(1rem, 2.5vh, 1.5rem);
   text-transform: uppercase;
   color: var(--color-white);
   /* Deep carved/embossed 3D fiery text shadow */
@@ -461,6 +465,11 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 0;
+}
+@media (max-width: 1024px) {
+  .hero-doodles {
+    display: none;
+  }
 }
 .hero-doodle {
   position: absolute;
@@ -530,15 +539,16 @@ body::before {
     box-shadow: 0 0 4px var(--color-red);
   }
 }
+
 .hero-taglines {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: clamp(1.5rem, 4vh, 3rem);
 }
 .tagline-sub {
   font-family: var(--font-body);
-  font-size: 2.2rem;
+  font-size: clamp(1.1rem, 2.5vw, 2.2rem);
   font-weight: 900;
   letter-spacing: 2px;
   color: var(--color-white);
@@ -546,9 +556,9 @@ body::before {
   text-transform: uppercase;
 }
 .tagline-main {
-  font-size: 1.25rem;
+  font-size: clamp(0.75rem, 1.2vw, 1.25rem);
   font-weight: 800;
-  letter-spacing: 6px;
+  letter-spacing: clamp(2px, 0.4vw, 6px);
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
@@ -574,7 +584,7 @@ body::before {
   align-items: center;
   gap: 0.5rem;
   transition: var(--transition-fast);
-  animation: smoothBounce 2s infinite ease-in-out;
+  animation: arrowPulse 2.5s infinite alternate ease-in-out;
 }
 .hero-scroll-btn i {
   font-size: 1.2rem;
@@ -583,12 +593,14 @@ body::before {
   color: var(--color-orange);
 }
 
-@keyframes smoothBounce {
-  0%, 100% {
-    transform: translate(-50%, 0);
+@keyframes arrowPulse {
+  0% {
+    opacity: 0.75;
+    transform: translate(-50%, 0) scale(0.98);
   }
-  50% {
-    transform: translate(-50%, -10px);
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1.02);
   }
 }
 
@@ -883,7 +895,7 @@ input#ownerModeToggle:checked ~ .owner-label {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2.25rem;
   position: relative;
   z-index: 5;
@@ -1081,7 +1093,8 @@ input#ownerModeToggle:checked ~ .owner-label {
 .plate-drawer {
   position: fixed;
   top: 0;
-  right: -420px;
+  right: 0;
+  transform: translateX(100%);
   width: 400px;
   height: 100vh;
   background: var(--bg-card);
@@ -1095,11 +1108,10 @@ input#ownerModeToggle:checked ~ .owner-label {
 @media (max-width: 480px) {
   .plate-drawer {
     width: 100%;
-    right: -100%;
   }
 }
 .plate-drawer.open {
-  right: 0;
+  transform: translateX(0);
 }
 
 .plate-header {
@@ -1641,12 +1653,35 @@ input#ownerModeToggle:checked ~ .owner-label {
 }
 
 /* --- RESPONSIVE MEDIA QUERIES --- */
-@media (max-width: 992px) {
-  .hero-title {
-    font-size: 5rem;
+@media (max-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
-  .tagline-sub {
-    font-size: 1.8rem;
+}
+
+@media (max-width: 992px) {
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    width: 300px;
+    height: 100vh;
+    background: var(--bg-card);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    transition: var(--transition-slow);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+    z-index: 1000;
+  }
+  .nav-menu.open {
+    transform: translateX(0);
+  }
+  .hamburger {
+    display: flex;
   }
   .about-container {
     grid-template-columns: 1fr;
@@ -1664,37 +1699,6 @@ input#ownerModeToggle:checked ~ .owner-label {
 }
 
 @media (max-width: 768px) {
-  .nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 300px;
-    height: 100vh;
-    background: var(--bg-card);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    transition: var(--transition-slow);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-    z-index: 1000;
-  }
-  .nav-menu.open {
-    right: 0;
-  }
-  .hamburger {
-    display: flex;
-  }
-  .hero-title {
-    font-size: 3.8rem;
-  }
-  .tagline-sub {
-    font-size: 1.4rem;
-  }
-  .tagline-main {
-    font-size: 1rem;
-    letter-spacing: 2px;
-  }
   .hero-ctas {
     flex-direction: column;
     gap: 1rem;
@@ -1704,10 +1708,44 @@ input#ownerModeToggle:checked ~ .owner-label {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
   .contact-form-container {
     padding: 2rem 1.25rem;
   }
   .contact-form h3 {
     font-size: 1.8rem;
+  }
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+  .footer-links-col h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .footer-bottom {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 0 0.5rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2.2rem;
+  }
+  
+  .section-padding {
+    padding: 5rem 1rem 3.5rem 1rem;
   }
 }

@@ -622,38 +622,85 @@ function setupTrailCanvas() {
   const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
   class TrailParticle {
-    constructor(x, y, speedMult = 1) {
+    constructor(x, y, speedMult = 1, isScrollParticle = false) {
       this.x = x;
       this.y = y;
-      this.size = Math.random() * 4 + 2;
-      this.vx = (Math.random() * 2 - 1) * speedMult;
-      this.vy = (Math.random() * 2 - 1) * speedMult - 0.4;
-      this.maxLife = Math.random() * 30 + 15;
+      this.isScrollParticle = isScrollParticle;
+      
+      // Random base size (radius)
+      this.size = Math.random() * 2 + 2; 
+      
+      // Elongation stretch factor representing puffed rice (pori) grain
+      this.stretch = 1.3 + Math.random() * 0.5;
+      
+      // Spawning velocities
+      if (isScrollParticle) {
+        // Falling grains: downwards speed with narrow sideways drift
+        this.vx = (Math.random() * 1.4 - 0.7) * speedMult;
+        this.vy = (Math.random() * 1.5 + 1.25) * speedMult;
+      } else {
+        // Scattered mouse trail grains
+        this.vx = (Math.random() * 2.2 - 1.1) * speedMult;
+        this.vy = (Math.random() * 2.2 - 1.1) * speedMult - 0.2;
+      }
+      
+      // Gravity settlement forces
+      this.gravity = isScrollParticle ? 0.08 : 0.03;
+      
+      // Rotation angles and speed for organic tumbling effect
+      this.angle = Math.random() * Math.PI * 2;
+      this.angularVelocity = Math.random() * 0.16 - 0.08;
+      
+      this.maxLife = Math.random() * 35 + 20;
       this.life = this.maxLife;
       
-      const colors = ["#ff2e00", "#ff7a00", "#ffd600", "#ff5d00"];
+      // Warm roasted puffed rice off-white/golden/amber palette
+      const colors = [
+        "rgba(255, 244, 214, 0.95)", // puffed rice off-white
+        "rgba(255, 226, 150, 0.95)", // toasted golden
+        "rgba(255, 170, 45, 0.95)",  // fiery amber
+        "rgba(255, 80, 0, 0.9)"       // hot ember orange
+      ];
       this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.opacity = Math.random() * 0.7 + 0.3;
+      this.glowColor = this.color.includes("255, 244") ? "rgba(255, 214, 0, 0.3)" : this.color;
+      this.opacity = Math.random() * 0.6 + 0.4;
     }
 
     update() {
+      // Apply settlement forces
+      this.vy += this.gravity;
       this.x += this.vx;
       this.y += this.vy;
+      
+      // Apply rotation tumbling
+      this.angle += this.angularVelocity;
+      
       this.life--;
-      this.size = Math.max(0.1, this.size * 0.95);
+      this.size = Math.max(0.1, this.size * 0.96);
     }
 
     draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      // Draw organic puffed rice grain shape using canvas ellipse
+      ctx.ellipse(0, 0, this.size * 0.55, this.size * this.stretch, 0, 0, Math.PI * 2);
+      
       ctx.fillStyle = this.color;
       ctx.globalAlpha = (this.life / this.maxLife) * this.opacity;
+      
       ctx.shadowBlur = this.size * 1.5;
-      ctx.shadowColor = this.color;
+      ctx.shadowColor = this.glowColor;
+      
       ctx.fill();
+      ctx.restore();
       ctx.shadowBlur = 0;
     }
   }
+
+  const scrollBtn = document.querySelector(".hero-scroll-btn");
 
   if (!isTouchDevice) {
     window.addEventListener("mousemove", (e) => {
@@ -675,6 +722,18 @@ function setupTrailCanvas() {
   function animate() {
     ctx.clearRect(0, 0, width, height);
     
+    // Spawn downward puffed rice stream from Scroll Down arrow when in view
+    if (scrollBtn) {
+      const rect = scrollBtn.getBoundingClientRect();
+      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        const emitX = rect.left + rect.width / 2;
+        const emitY = rect.bottom - 10;
+        if (Math.random() < 0.45) {
+          particles.push(new TrailParticle(emitX, emitY, 1.2, true));
+        }
+      }
+    }
+
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.update();
