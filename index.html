@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aakooo Eatzz | Extreme Erode Street Food & Spicy Heat</title>
+  <!-- Meta description for SEO -->
+  <meta name="description"
+    content="Feel the heat at Aakooo Eatzz! Erode's authentic, bold, and fiery street food. Serving Thattu Vadai Set, Norukkal, Mutta Burger, and extreme spicy flavors.">
+  <meta name="keywords"
+    content="street food, Thattu Vadai, Norukkal, Aakooo Eatzz, Erode food, spicy food, Indian street food">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <!-- Background Canvas for Flame Embers -->
+  <canvas id="emberCanvas" class="hero-canvas"></canvas>
+
+  <!-- Sticky Navbar -->
+  <header class="header-nav" id="mainHeader">
+    <div class="nav-container">
+      <a href="#home" class="logo neon-text-red">
+        AAKOOO<span class="gradient-text">EATZZ</span><span class="logo-tag">HOT</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#menu" class="nav-link">Menu</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- My Plate Icon Badge -->
+        <button class="plate-count-badge" id="plateBadgeBtn" aria-label="Open Plate Summary" title="Your Plate">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+          <span class="badge" id="plateBadgeCount">0</span>
+        </button>
+
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-fire"></i> Fresh & Fiery Tamil Nadu Street Vibe
+      </div>
+      <h1 class="hero-title gradient-text neon-text-red">AAKOOO EATZZ</h1>
+      <div class="hero-taglines">
+        <span class="tagline-sub neon-text-orange">Feel The Heat!</span>
+        <span class="tagline-main">Bold. Spicy. Addictive.</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn btn-primary">
+          <i class="fa-solid fa-pepper-hot"></i> Explore Menu
+        </a>
+        <a href="#about" class="btn btn-secondary">
+          <i class="fa-solid fa-utensils"></i> Our Story
+        </a>
+      </div>
+    </div>
+    <a href="#about" class="hero-scroll-btn" aria-label="Scroll to About Section">
+      Scroll Down
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section section-padding" id="about">
+    <div class="about-container">
+
+      <!-- Text content -->
+      <div class="about-text">
+        <span class="about-badge">Extreme Flavor. Zero Apologies.</span>
+        <h2 class="about-title">Made for True Heat Lovers</h2>
+        <p class="about-desc">
+          Born straight out of the bustling street-food culture of , Tamil Nadu, <strong>Aakooo Eatzz</strong> was
+          created to satisfy the ultimate spice craving. We take the iconic, crunchy <em>Thattu Vadai Set</em> (crispy
+          flat puris loaded with grated carrots, beetroots, and hot chutneys) and give it an explosive modern twist.
+        </p>
+        <p class="about-desc">
+          Whether you want the crisp crunch of raw mangoes, the rich luxury of scrambled eggs (Mutta Norukkal), or the
+          bold combination of spicy chicken and crushed puris, we serve it hot, fresh, and unapologetically spicy. We
+          don't tone down the heat — we dial it up!
+        </p>
+
+        <div class="about-highlights">
+          <div class="highlight-card">
+            <i class="fa-solid fa-pepper-hot" style="color: var(--color-red);"></i>
+            <h4>Original Erode Style</h4>
+            <p>Authentic recipes crafted with homemade spice pastes and fresh vegetables daily.</p>
+          </div>
+          <div class="highlight-card">
+            <i class="fa-solid fa-bolt" style="color: var(--color-yellow);"></i>
+            <h4>High Voltage Taste</h4>
+            <p>A beautiful chaos of sweet, tangy, and tongue-numbingly spicy street flavors.</p>
+          </div>
+        </div>
+
+        <a href="#menu" class="btn btn-primary">
+          <i class="fa-solid fa-basket-shopping"></i> Customize Your Plate
+        </a>
+      </div>
+
+      <!-- Graphic Art representation -->
+      <div class="about-graphics">
+        <div class="graffiti-box">
+          <div class="graffiti-text">SPICY</div>
+        </div>
+        <!-- Overlaid floating card -->
+        <div class="about-overlay-card">
+          <span class="badge-icon">🔥</span>
+          <h5>Erode's Pride</h5>
+          <p>Crunchy Thattu Vadai & crushed Norukkal sets made fresh in front of your eyes!</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="menu-section section-padding" id="menu">
+
+    <div class="section-header">
+      <h2 class="gradient-text neon-text-orange">The Hot Spot Menu</h2>
+      <p>Click any item to add to your custom order plate. Toggle "Owner Mode" below to edit card pricing dynamically!
+      </p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="menu-controls">
+      <!-- Search -->
+      <div class="menu-search-wrapper">
+        <input type="text" id="menuSearchInput" class="menu-search"
+          placeholder="Search menu item (e.g., Norukkal, Mutta)...">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="menu-filters" id="filterTabsContainer">
+        <!-- Will be dynamically populated by JS -->
+      </div>
+
+      <!-- Owner Mode Switcher -->
+      <div class="owner-panel">
+        <label class="owner-toggle-wrapper" for="ownerModeToggle">
+          <input type="checkbox" id="ownerModeToggle">
+          <div class="owner-toggle-switch"></div>
+          <span class="owner-label"><i class="fa-solid fa-lock-open"></i> Owner Price-Edit Mode</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Menu Cards Grid -->
+    <div class="menu-grid" id="menuGrid">
+      <!-- Cards dynamically populated by JS -->
+    </div>
+
+  </section>
+
+  <!-- Order / Plate Slide-out Drawer -->
+  <div class="plate-drawer" id="plateDrawer">
+    <div class="plate-header">
+      <h3><i class="fa-solid fa-fire"></i> My Spicy Plate</h3>
+      <button class="close-plate-btn" id="closePlateBtn" aria-label="Close Plate Drawer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Cart Items list -->
+    <div class="plate-items" id="plateItemsContainer">
+      <!-- Dynamically filled by JS -->
+    </div>
+
+    <!-- Drawer Footer and Checkout -->
+    <div class="plate-footer">
+      <div class="total-row">
+        <span class="total-label">Total Heat Cost:</span>
+        <span class="total-amount" id="plateTotalAmount">₹0.00</span>
+      </div>
+      <button class="btn btn-primary checkout-btn" id="checkoutBtn">
+        <i class="fa-brands fa-whatsapp"></i> Fire Order via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Backdrop for cart drawer -->
+  <div class="plate-backdrop" id="plateBackdrop"></div>
+
+  <!-- Contact Section -->
+  <section class="contact-section section-padding" id="contact">
+    <div class="section-header">
+      <h2 class="gradient-text neon-text-red">Locate the Spice</h2>
+      <p>Swing by our cart or drop a fiery review below. Zero apologies for the heat level!</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="contact-container">
+      <!-- Contact Info Cards -->
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="contact-card-details">
+            <h4>Find Us</h4>
+            <p>12/4 Spicy Street, Near Food Market, Erode, Tamil Nadu, 636001</p>
+            <div class="map-mock" id="mapMock" title="Open in Map Mock">
+              <i class="fa-solid fa-location-crosshairs"></i>
+              <div class="map-label">Spicy Hotspot Location</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon"><i class="fa-solid fa-phone"></i></div>
+          <div class="contact-card-details">
+            <h4>Call & Order</h4>
+            <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+            <p>Order direct for fast pickup!</p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon"><i class="fa-solid fa-clock"></i></div>
+          <div class="contact-card-details">
+            <h4>Operating Hours</h4>
+            <p>Monday - Sunday: 4:00 PM - 11:30 PM</p>
+            <p>Best street vibe around 8:00 PM!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form Container -->
+      <div class="contact-form-container">
+        <form class="contact-form" id="contactForm"
+          onsubmit="event.preventDefault(); alert('🔥 Your fiery review has been submitted! Thank you!'); this.reset();">
+          <h3>Send Feedback</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="formName" class="form-label">Your Name</label>
+              <input type="text" id="formName" class="form-input" placeholder="Chili Lover" required>
+            </div>
+            <div class="form-group">
+              <label for="formEmail" class="form-label">Your Email</label>
+              <input type="email" id="formEmail" class="form-input" placeholder="spicy@heat.com" required>
+            </div>
+          </div>
+          <div class="form-group full-width" style="margin-bottom: 1.5rem;">
+            <label for="formSubject" class="form-label">Spiciness Rating</label>
+            <select id="formSubject" class="form-input"
+              style="background-color: var(--bg-secondary); color: var(--color-white);" required>
+              <option value="mild">Mild (Wait, really?)</option>
+              <option value="hot">Medium (Perfect kick)</option>
+              <option value="extreme" selected>Extreme (Fiery tears of joy!)</option>
+            </select>
+          </div>
+          <div class="form-group full-width" style="margin-bottom: 1.5rem;">
+            <label for="formMessage" class="form-label">Feedback</label>
+            <textarea id="formMessage" class="form-textarea"
+              placeholder="Tell us how much you loved the Thattu Vadai Set..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary submit-btn">
+            <i class="fa-solid fa-paper-plane"></i> Launch Review
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Column 1 -->
+      <div class="footer-brand">
+        <a href="#home" class="logo neon-text-red">
+          AAKOOO<span class="gradient-text">EATZZ</span>
+        </a>
+        <p>Bringing Erode's most extreme, crunchy, and fiery street eats directly to your taste buds.</p>
+        <div class="social-links">
+          <a href="#" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="footer-links-col">
+        <h4>Sitemap</h4>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="footer-links-col">
+        <h4>Spicy Treats</h4>
+        <ul class="footer-links">
+          <li><a href="#menu">Thattu Vadai Set</a></li>
+          <li><a href="#menu">Norukkal Set</a></li>
+          <li><a href="#menu">Mutta Burger</a></li>
+          <li><a href="#menu">Chicken Puri Norukkal</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Aakooo Eatzz. All Rights Reserved. Crafted for Spice Enthusiasts.</p>
+      <div class="footer-bottom-links">
+        <a href="#" id="ownerLinkToggle"><i class="fa-solid fa-lock"></i> Owner Portal</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- JavaScript Interaction Script -->
+  <script src="app.js"></script>
+</body>
+
+</html>
