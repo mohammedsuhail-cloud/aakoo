@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap');
 
 /* --- CUSTOM VARIABLES --- */
 :root {
@@ -21,9 +21,9 @@
   --neon-border-red: 1px solid rgba(255, 46, 0, 0.4);
   --neon-border-orange: 1px solid rgba(255, 122, 0, 0.4);
   
-  --font-heading: 'Permanent Marker', cursive;
-  --font-logo: 'Rubik Mono One', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Bungee', sans-serif;
+  --font-logo: 'Bungee', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
   
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -48,6 +48,31 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
+}
+
+/* Cinematic film grain noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.038;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Mouse sparks overlay canvas */
+#trailCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
 }
 
 /* --- CUSTOM SCROLLBAR --- */
@@ -96,6 +121,7 @@ body {
 
 .btn-primary {
   background: var(--fiery-gradient);
+  background-size: 200% auto;
   color: var(--bg-primary);
   border: none;
   box-shadow: 0 4px 15px rgba(255, 46, 0, 0.4);
@@ -111,17 +137,20 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, var(--color-yellow), var(--color-orange), var(--color-red));
+  background-size: 200% auto;
   opacity: 0;
   z-index: -1;
   transition: var(--transition-normal);
 }
 .btn-primary:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.05);
+  background-position: right center;
   box-shadow: 0 0 25px rgba(255, 122, 0, 0.8);
   color: #000;
 }
 .btn-primary:hover::before {
   opacity: 1;
+  background-position: right center;
 }
 
 .btn-secondary {
@@ -134,7 +163,7 @@ body {
   background: rgba(255, 122, 0, 0.1);
   border-color: var(--color-yellow);
   box-shadow: var(--neon-orange), inset 0 0 10px rgba(255, 122, 0, 0.2);
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.05);
 }
 
 .section-padding {
@@ -233,6 +262,7 @@ body {
   border-radius: 4px;
   font-weight: 800;
   margin-left: 0.25rem;
+  animation: tagPulse 1.8s infinite ease-in-out;
 }
 
 .nav-menu {
@@ -382,38 +412,123 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 46, 0, 0.1);
-  border: 1px solid rgba(255, 46, 0, 0.3);
-  padding: 0.5rem 1.25rem;
+  background: rgba(255, 46, 0, 0.08);
+  border: 1px solid rgba(255, 46, 0, 0.4);
+  padding: 0.6rem 1.5rem;
   border-radius: 50px;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--color-red);
-  margin-bottom: 2rem;
-  animation: pulseGlow 2s infinite alternate;
+  color: var(--color-white);
+  margin-bottom: 2.25rem;
+  box-shadow: 0 0 10px rgba(255, 46, 0, 0.2);
+  animation: badgeBorderGlow 2.5s infinite alternate ease-in-out;
 }
 .hero-title {
   font-family: var(--font-heading);
   font-size: 7.5rem;
   line-height: 0.9;
-  letter-spacing: 3px;
+  letter-spacing: 6px;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
+  color: var(--color-white);
+  /* Deep carved/embossed 3D fiery text shadow */
+  text-shadow: 
+    0 1px 0 #ff2e00, 
+    0 2px 0 #d42700, 
+    0 3px 0 #a81e00, 
+    0 4px 0 #801600, 
+    0 5px 0 #ff5d00, 
+    0 6px 1px rgba(0,0,0,.15), 
+    0 0 5px rgba(255,46,0,.2), 
+    0 1px 3px rgba(255,122,0,.4), 
+    0 3px 5px rgba(255,122,0,.3), 
+    0 5px 10px rgba(255,122,0,.3), 
+    0 10px 10px rgba(255,122,0,.25), 
+    0 20px 20px rgba(0,0,0,.2);
+  animation: headGlow 3s ease-in-out infinite alternate;
   position: relative;
+  z-index: 2;
 }
-.hero-title::after {
-  content: 'AAKOOO EATZZ';
+
+/* Floating SVG doodles styling */
+.hero-doodles {
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  color: var(--bg-primary);
-  z-index: -1;
-  font-family: var(--font-heading);
-  -webkit-text-stroke: 1px rgba(255, 122, 0, 0.5);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-doodle {
+  position: absolute;
+  opacity: 0.85;
+}
+.doodle-left {
+  left: -90px;
+  top: 15%;
+  animation: doodleFloatLeft 4s ease-in-out infinite alternate;
+}
+.doodle-right {
+  right: -90px;
+  top: 10%;
+  animation: doodleFloatRight 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes doodleFloatLeft {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-15px) rotate(-15deg); }
+}
+@keyframes doodleFloatRight {
+  0% { transform: translateY(0) rotate(15deg); }
+  100% { transform: translateY(-18px) rotate(30deg); }
+}
+
+/* Custom section separators/dividers */
+.flame-divider {
+  position: absolute;
+  bottom: -1px; /* seamless snap */
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.flame-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 45px;
+  transform: rotate(180deg);
+}
+
+@keyframes badgeBorderGlow {
+  0% {
+    border-color: rgba(255, 46, 0, 0.4);
+    box-shadow: 0 0 10px rgba(255, 46, 0, 0.2), inset 0 0 5px rgba(255, 46, 0, 0.1);
+  }
+  100% {
+    border-color: rgba(255, 214, 0, 0.8);
+    box-shadow: 0 0 20px rgba(255, 122, 0, 0.6), inset 0 0 10px rgba(255, 122, 0, 0.3);
+  }
+}
+
+@keyframes tagPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 4px var(--color-red);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px var(--color-red), 0 0 20px var(--color-orange);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 4px var(--color-red);
+  }
 }
 .hero-taglines {
   display: flex;
@@ -422,16 +537,18 @@ body {
   margin-bottom: 3rem;
 }
 .tagline-sub {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-size: 2.2rem;
-  letter-spacing: 1px;
+  font-weight: 900;
+  letter-spacing: 2px;
   color: var(--color-white);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 15px rgba(255, 46, 0, 0.6);
+  text-transform: uppercase;
 }
 .tagline-main {
   font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
@@ -457,13 +574,47 @@ body {
   align-items: center;
   gap: 0.5rem;
   transition: var(--transition-fast);
+  animation: smoothBounce 2s infinite ease-in-out;
 }
 .hero-scroll-btn i {
   font-size: 1.2rem;
-  animation: bounceDown 1.5s infinite;
 }
 .hero-scroll-btn:hover {
   color: var(--color-orange);
+}
+
+@keyframes smoothBounce {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -10px);
+  }
+}
+
+@keyframes headGlow {
+  0% {
+    text-shadow: 
+      1px 1px 0px var(--color-red),
+      2px 2px 0px var(--color-red),
+      3px 3px 0px var(--color-orange),
+      4px 4px 0px var(--color-orange),
+      5px 5px 0px var(--color-yellow),
+      6px 6px 0px var(--color-yellow),
+      8px 8px 15px rgba(255, 46, 0, 0.4),
+      0 0 20px rgba(255, 74, 0, 0.2);
+  }
+  100% {
+    text-shadow: 
+      1px 1px 0px var(--color-red),
+      2px 2px 0px var(--color-red),
+      3px 3px 0px var(--color-orange),
+      4px 4px 0px var(--color-orange),
+      5px 5px 0px var(--color-yellow),
+      6px 6px 0px var(--color-yellow),
+      8px 8px 25px rgba(255, 46, 0, 0.8),
+      0 0 45px rgba(255, 122, 0, 0.6);
+  }
 }
 
 /* --- ABOUT SECTION --- */
@@ -769,12 +920,13 @@ input#ownerModeToggle:checked ~ .owner-label {
   border-bottom: 1px solid #1c1c24;
 }
 .food-svg-graphic {
-  width: 65%;
-  height: 65%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: var(--transition-slow);
 }
 .menu-card:hover .food-svg-graphic {
-  transform: scale(1.1) rotate(3deg);
+  transform: scale(1.08) rotate(2deg);
 }
 
 /* Spicy Meter */

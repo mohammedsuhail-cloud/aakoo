@@ -8,36 +8,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 3,
     price: 35.00,
     tag: "veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <defs>
-        <radialGradient id="purigrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ff9d00" />
-          <stop offset="100%" stop-color="#d45500" />
-        </radialGradient>
-      </defs>
-      <!-- Base Plate -->
-      <ellipse cx="50" cy="70" rx="35" ry="12" fill="#222" opacity="0.4" />
-      <ellipse cx="50" cy="68" rx="32" ry="10" fill="#1b1b22" stroke="#333" stroke-width="1" />
-      
-      <!-- Puris -->
-      <circle cx="38" cy="64" r="14" fill="url(#purigrad)" stroke="#b84200" stroke-width="1" />
-      <circle cx="62" cy="64" r="14" fill="url(#purigrad)" stroke="#b84200" stroke-width="1" />
-      <circle cx="50" cy="58" r="15" fill="url(#purigrad)" stroke="#b84200" stroke-width="1" />
-      
-      <!-- Veggie Stuffing -->
-      <path d="M 40,50 Q 50,42 60,50 Q 55,62 40,50 Z" fill="#e65100" opacity="0.8" /> <!-- Carrot -->
-      <path d="M 44,52 Q 50,45 56,52 Z" fill="#880e4f" /> <!-- Beetroot -->
-      <ellipse cx="48" cy="56" rx="3" ry="1" fill="#fff" opacity="0.7" /> <!-- Onion -->
-      <ellipse cx="55" cy="54" rx="2" ry="1.5" fill="#fff" opacity="0.7" /> 
-      
-      <!-- Chutney Drizzles -->
-      <path d="M 38,55 Q 46,45 52,58" stroke="#d50000" stroke-width="2.5" fill="none" stroke-linecap="round" /> <!-- Spicy Red -->
-      <path d="M 48,58 Q 58,48 64,56" stroke="#00c853" stroke-width="2" fill="none" stroke-linecap="round" /> <!-- Green Coriander -->
-      
-      <!-- Flame Detail -->
-      <path d="M 50,22 Q 47,35 50,38 Q 53,35 50,22 Z" fill="#ff3d00" opacity="0.8" />
-      <path d="M 50,26 Q 48,34 50,36 Q 52,34 50,26 Z" fill="#ffea00" />
-    </svg>`
+    image: "assets/thattu_vadai_set.png"
   },
   {
     id: "norukkal-set",
@@ -47,27 +18,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 4,
     price: 45.00,
     tag: "veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="72" rx="38" ry="12" fill="#222" opacity="0.4" />
-      <ellipse cx="50" cy="70" rx="35" ry="10" fill="#1b1b22" stroke="#444" stroke-width="1.5" />
-      
-      <!-- Crushed puri fragments -->
-      <polygon points="35,68 45,62 42,70" fill="#e65100" />
-      <polygon points="58,68 68,64 62,72" fill="#ff9d00" />
-      <polygon points="48,64 56,60 52,69" fill="#ff7a00" />
-      
-      <!-- Mixed carrots & beetroot strips -->
-      <path d="M 38,62 C 42,66 48,64 52,67" stroke="#e65100" stroke-width="2" fill="none" stroke-linecap="round" />
-      <path d="M 44,60 C 48,58 52,62 58,61" stroke="#880e4f" stroke-width="2" fill="none" stroke-linecap="round" />
-      <path d="M 36,65 C 44,62 42,69 49,63" stroke="#2e7d32" stroke-width="1.5" fill="none" stroke-linecap="round" />
-      
-      <!-- Peanuts -->
-      <ellipse cx="43" cy="68" rx="2" ry="1.2" fill="#8d6e63" />
-      <ellipse cx="55" cy="65" rx="2" ry="1.2" fill="#8d6e63" />
-      
-      <!-- Rich Gravy Splash -->
-      <path d="M 35,66 Q 50,52 65,66" stroke="#ff3d00" stroke-width="3" fill="none" opacity="0.8" stroke-linecap="round" />
-    </svg>`
+    image: "assets/norukkal_set.png"
   },
   {
     id: "mango-thattu-vadai",
@@ -77,22 +28,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 4,
     price: 40.00,
     tag: "veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="70" rx="35" ry="10" fill="#1b1b22" opacity="0.5" />
-      
-      <!-- Puri base -->
-      <circle cx="50" cy="60" r="16" fill="#ff9d00" stroke="#d45500" stroke-width="1" />
-      
-      <!-- Raw Mango Slices (Green crescents) -->
-      <path d="M 40,52 Q 50,45 60,52 Q 50,48 40,52 Z" fill="#aeea00" stroke="#76ff03" stroke-width="0.5" />
-      <path d="M 42,56 Q 50,48 58,56 Q 50,52 42,56 Z" fill="#c5e1a5" stroke="#76ff03" stroke-width="0.5" />
-      
-      <!-- Carrots and chili powder dots -->
-      <path d="M 45,55 Q 52,62 55,54" stroke="#ff3d00" stroke-width="1.5" fill="none" />
-      <circle cx="46" cy="58" r="0.8" fill="#d50000" />
-      <circle cx="54" cy="57" r="0.8" fill="#d50000" />
-      <circle cx="50" cy="54" r="0.8" fill="#d50000" />
-    </svg>`
+    image: "assets/mango_thattu_vadai.png"
   },
   {
     id: "mutta-thattu-vadai",
@@ -102,21 +38,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 3,
     price: 50.00,
     tag: "non-veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="70" rx="35" ry="10" fill="#1b1b22" opacity="0.5" />
-      
-      <!-- Puri base -->
-      <circle cx="50" cy="60" r="16" fill="#ff9d00" stroke="#d45500" stroke-width="1" />
-      
-      <!-- Egg Slice -->
-      <ellipse cx="50" cy="54" rx="11" ry="7" fill="#ffffff" stroke="#ddd" stroke-width="1" />
-      <ellipse cx="50" cy="54" rx="5" ry="3.5" fill="#ffd600" />
-      
-      <!-- Spices and Onion garnish -->
-      <path d="M 44,54 L 56,54" stroke="#8d6e63" stroke-width="1.5" stroke-dasharray="1 2" />
-      <circle cx="48" cy="52" r="0.7" fill="#d50000" />
-      <circle cx="52" cy="56" r="0.7" fill="#d50000" />
-    </svg>`
+    image: "assets/mutta_thattu_vadai.png"
   },
   {
     id: "mutta-norukkal",
@@ -126,23 +48,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 4,
     price: 60.00,
     tag: "non-veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="72" rx="38" ry="12" fill="#1b1b22" opacity="0.5" />
-      
-      <!-- Crushed bits -->
-      <polygon points="38,68 46,63 43,70" fill="#ff9d00" />
-      <polygon points="56,66 64,62 60,70" fill="#ff9d00" />
-      
-      <!-- Scrambled Egg Pieces (Yellowish chunks) -->
-      <path d="M 45,60 Q 48,57 51,62 Z" fill="#ffd54f" stroke="#ffb300" stroke-width="0.5" />
-      <path d="M 52,65 Q 55,62 58,66 Z" fill="#ffd54f" stroke="#ffb300" stroke-width="0.5" />
-      <path d="M 40,65 Q 43,62 45,67 Z" fill="#fff9c4" />
-      
-      <!-- Red Gravy and herbs -->
-      <path d="M 36,66 C 45,55 55,55 64,66" stroke="#ff2e00" stroke-width="2.5" fill="none" opacity="0.9" />
-      <circle cx="48" cy="62" r="0.8" fill="#2e7d32" />
-      <circle cx="52" cy="64" r="0.8" fill="#2e7d32" />
-    </svg>`
+    image: "assets/mutta_norukkal.png"
   },
   {
     id: "chicken-norukkal",
@@ -152,24 +58,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 5,
     price: 75.00,
     tag: "non-veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="72" rx="38" ry="12" fill="#1b1b22" opacity="0.5" stroke="#333" />
-      
-      <!-- Puri crumbs -->
-      <polygon points="35,66 43,60 40,68" fill="#ff9d00" />
-      <polygon points="58,66 66,62 62,70" fill="#e65100" />
-      
-      <!-- Shredded Chicken (Fleshy shreds) -->
-      <path d="M 42,58 Q 48,62 55,59" stroke="#b71c1c" stroke-width="2.5" fill="none" stroke-linecap="round" />
-      <path d="M 45,64 Q 52,61 58,65" stroke="#b71c1c" stroke-width="2.5" fill="none" stroke-linecap="round" />
-      <path d="M 48,60 Q 50,67 52,61" stroke="#b71c1c" stroke-width="2" fill="none" stroke-linecap="round" />
-      
-      <!-- Spicy Chicken Salna Drizzle -->
-      <path d="M 32,68 C 45,56 55,56 68,68" stroke="#ff2e00" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.9" />
-      <!-- Curry Leaves -->
-      <path d="M 38,62 Q 40,60 42,63" fill="#1b5e20" />
-      <path d="M 58,60 Q 60,58 62,61" fill="#1b5e20" />
-    </svg>`
+    image: "assets/chicken_norukkal.png"
   },
   {
     id: "spicy-lays",
@@ -179,22 +68,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 3,
     price: 30.00,
     tag: "veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <!-- Lays Packet (Open) -->
-      <rect x="30" y="42" width="40" height="30" rx="4" fill="#d50000" stroke="#ff8f00" stroke-width="1.5" transform="rotate(-5 50 50)" />
-      <!-- Label placeholder -->
-      <ellipse cx="50" cy="56" rx="14" ry="7" fill="#ffd600" transform="rotate(-5 50 50)" />
-      <text x="50" y="59" font-family="Arial" font-size="5" font-weight="900" fill="#d50000" text-anchor="middle" transform="rotate(-5 50 50)">LAYS</text>
-      
-      <!-- Chips popping out -->
-      <circle cx="40" cy="40" r="5" fill="#ffd54f" stroke="#ffb300" stroke-width="0.5" />
-      <circle cx="50" cy="38" r="6" fill="#ffd54f" stroke="#ffb300" stroke-width="0.5" />
-      <circle cx="60" cy="42" r="5" fill="#ffd54f" stroke="#ffb300" stroke-width="0.5" />
-      
-      <!-- Veggies & Chili Powders -->
-      <path d="M 38,40 Q 48,34 58,40" stroke="#ff3d00" stroke-width="2" fill="none" stroke-linecap="round" />
-      <path d="M 44,38 Q 50,33 56,38" stroke="#4caf50" stroke-width="1.5" fill="none" stroke-linecap="round" />
-    </svg>`
+    image: "assets/spicy_lays.png"
   },
   {
     id: "mutta-masala",
@@ -204,28 +78,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 4,
     price: 40.00,
     tag: "non-veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="72" rx="35" ry="10" fill="#1b1b22" opacity="0.5" />
-      
-      <!-- Gravy Bowl -->
-      <path d="M 28,54 C 28,68 72,68 72,54 Z" fill="#3e2723" stroke="#21100f" stroke-width="1.5" />
-      <path d="M 30,53 Q 50,56 70,53" fill="none" stroke="#21100f" stroke-width="1" />
-      
-      <!-- Thick Red Masala -->
-      <path d="M 30,55 C 36,68 64,68 70,55 Z" fill="#b71c1c" />
-      
-      <!-- Hard Boiled Egg Halves -->
-      <ellipse cx="43" cy="56" rx="8" ry="5.5" fill="#ffffff" transform="rotate(-15 43 56)" />
-      <ellipse cx="43" cy="56" rx="3.5" ry="2.5" fill="#ffc107" transform="rotate(-15 43 56)" />
-      
-      <ellipse cx="57" cy="56" rx="8" ry="5.5" fill="#ffffff" transform="rotate(15 57 56)" />
-      <ellipse cx="57" cy="56" rx="3.5" ry="2.5" fill="#ffc107" transform="rotate(15 57 56)" />
-      
-      <!-- Gravy Splashes & Pepper -->
-      <circle cx="50" cy="62" r="0.7" fill="#000" />
-      <circle cx="44" cy="60" r="0.5" fill="#000" />
-      <circle cx="56" cy="61" r="0.6" fill="#000" />
-    </svg>`
+    image: "assets/mutta_masala.png"
   },
   {
     id: "mutta-burger",
@@ -235,31 +88,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 3,
     price: 55.00,
     tag: "non-veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <!-- Shadow -->
-      <ellipse cx="50" cy="78" rx="26" ry="7" fill="#1b1b22" opacity="0.6" />
-      
-      <!-- Bottom Bun -->
-      <path d="M 28,68 Q 50,72 72,68 C 72,74 28,74 28,68 Z" fill="#d7ccc8" stroke="#8d6e63" stroke-width="1.5" />
-      
-      <!-- Hot Chili Sauce -->
-      <path d="M 26,67 Q 50,70 74,67 L 70,69 Q 50,72 30,69 Z" fill="#d50000" />
-      
-      <!-- Double Egg Omelette (Folded yellow) -->
-      <path d="M 24,63 Q 50,60 76,63 C 78,67 22,67 24,63 Z" fill="#ffd54f" stroke="#ffb300" stroke-width="1" />
-      
-      <!-- Onions & Greens -->
-      <ellipse cx="38" cy="60" rx="7" ry="2" fill="none" stroke="#ba68c8" stroke-width="2.5" />
-      <ellipse cx="62" cy="59" rx="6" ry="1.5" fill="none" stroke="#ba68c8" stroke-width="2.5" />
-      <path d="M 25,60 Q 50,56 75,60" stroke="#4caf50" stroke-width="3" fill="none" />
-      
-      <!-- Top Bun -->
-      <path d="M 26,56 Q 50,34 74,56 Z" fill="#a1887f" stroke="#5d4037" stroke-width="1.5" />
-      <!-- Sesame seeds -->
-      <circle cx="44" cy="46" r="0.6" fill="#fff" />
-      <circle cx="56" cy="46" r="0.6" fill="#fff" />
-      <circle cx="50" cy="50" r="0.6" fill="#fff" />
-    </svg>`
+    image: "assets/mutta_burger.png"
   },
   {
     id: "pani-puri-set",
@@ -269,24 +98,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 3,
     price: 40.00,
     tag: "veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="74" rx="38" ry="10" fill="#1b1b22" opacity="0.5" />
-      
-      <!-- Big Pani Bowl (Green mint water) -->
-      <ellipse cx="50" cy="54" rx="20" ry="12" fill="#1b5e20" stroke="#3e2723" stroke-width="2" />
-      <ellipse cx="50" cy="50" rx="18" ry="9" fill="#2e7d32" />
-      
-      <!-- Crispy Puris surrounding -->
-      <circle cx="26" cy="66" r="8" fill="#ffd54f" stroke="#ffb300" stroke-width="0.8" />
-      <circle cx="24" cy="52" r="7.5" fill="#ffd54f" stroke="#ffb300" stroke-width="0.8" />
-      <circle cx="74" cy="66" r="8" fill="#ffd54f" stroke="#ffb300" stroke-width="0.8" />
-      <circle cx="76" cy="52" r="7.5" fill="#ffd54f" stroke="#ffb300" stroke-width="0.8" />
-      
-      <!-- Puri with Hole & Stuffing -->
-      <circle cx="50" cy="72" r="10" fill="#ffd54f" stroke="#ffb300" stroke-width="1" />
-      <ellipse cx="50" cy="69" rx="5" ry="3" fill="#8d6e63" /> <!-- stuffing -->
-      <circle cx="50" cy="69" r="1.5" fill="#4caf50" /> <!-- green coriander -->
-    </svg>`
+    image: "assets/pani_puri_set.png"
   },
   {
     id: "pani-puri-norukkal",
@@ -296,25 +108,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 3,
     price: 45.00,
     tag: "veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="74" rx="38" ry="10" fill="#1b1b22" opacity="0.5" />
-      <ellipse cx="50" cy="70" rx="34" ry="9" fill="#15151e" stroke="#444" stroke-width="1" />
-      
-      <!-- Crushed hollow shell fragments -->
-      <path d="M 32,68 A 6,6 0 0,1 42,62" stroke="#ffb300" stroke-width="2.5" fill="none" />
-      <path d="M 58,68 A 6,6 0 0,0 68,62" stroke="#ffb300" stroke-width="2.5" fill="none" />
-      
-      <!-- Mint water (green pool) -->
-      <path d="M 34,68 C 45,60 55,60 66,68 Z" fill="#2e7d32" opacity="0.8" />
-      
-      <!-- Potato masala & onions -->
-      <circle cx="45" cy="68" r="3" fill="#8d6e63" />
-      <circle cx="55" cy="67" r="2.5" fill="#8d6e63" />
-      <ellipse cx="50" cy="65" rx="3" ry="1.5" fill="#fff" opacity="0.8" />
-      
-      <!-- Sweet Tamarind drizzle (red/brown) -->
-      <path d="M 36,66 Q 50,56 64,66" stroke="#bf360c" stroke-width="2" fill="none" stroke-linecap="round" />
-    </svg>`
+    image: "assets/pani_puri_norukkal.png"
   },
   {
     id: "chicken-puri-norukkal",
@@ -324,26 +118,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 5,
     price: 70.00,
     tag: "non-veg",
-    svg: `<svg viewBox="0 0 100 100" class="food-svg-graphic">
-      <ellipse cx="50" cy="74" rx="38" ry="10" fill="#1b1b22" opacity="0.5" />
-      <ellipse cx="50" cy="70" rx="34" ry="9" fill="#15151e" stroke="#444" stroke-width="1" />
-      
-      <!-- Crushed shell fragments -->
-      <path d="M 30,68 Q 40,62 42,70" stroke="#ffb300" stroke-width="2.5" fill="none" />
-      
-      <!-- Green Chili Water Pool -->
-      <path d="M 32,68 C 45,58 55,58 68,68 Z" fill="#1b5e20" opacity="0.75" />
-      
-      <!-- Shredded Chicken (reddish shreds) -->
-      <path d="M 40,64 Q 48,60 56,65" stroke="#b71c1c" stroke-width="2" fill="none" stroke-linecap="round" />
-      <path d="M 45,69 Q 52,64 60,67" stroke="#b71c1c" stroke-width="2" fill="none" stroke-linecap="round" />
-      
-      <!-- Diced Onions & Chili flakes -->
-      <rect x="42" y="65" width="2" height="2" fill="#fff" opacity="0.9" />
-      <rect x="52" y="64" width="2" height="2" fill="#fff" opacity="0.9" />
-      <circle cx="48" cy="68" r="0.7" fill="#ff1744" />
-      <circle cx="54" cy="69" r="0.7" fill="#ff1744" />
-    </svg>`
+    image: "assets/chicken_puri_norukkal.png"
   }
 ];
 
@@ -387,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderFilters();
   renderMenu();
   setupEmberCanvas();
+  setupTrailCanvas();
   setupScrollTracking();
 });
 
@@ -473,7 +249,7 @@ function renderMenu() {
 
     card.innerHTML = `
       <div class="food-img-container">
-        ${item.svg}
+        <img src="${item.image}" alt="${item.name}" class="food-svg-graphic">
         <span class="spicy-badge">${chilis}</span>
         <span class="tag-badge ${tagClass}">${tagText}</span>
       </div>
@@ -822,6 +598,93 @@ function setupEmberCanvas() {
       p.draw();
     });
 
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+// --- CURSOR TRAIL / TOUCH SPARKS ANIMATION ---
+function setupTrailCanvas() {
+  const canvas = document.getElementById("trailCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  window.addEventListener("resize", () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  const particles = [];
+  const mouse = { x: null, y: null };
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+  class TrailParticle {
+    constructor(x, y, speedMult = 1) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 4 + 2;
+      this.vx = (Math.random() * 2 - 1) * speedMult;
+      this.vy = (Math.random() * 2 - 1) * speedMult - 0.4;
+      this.maxLife = Math.random() * 30 + 15;
+      this.life = this.maxLife;
+      
+      const colors = ["#ff2e00", "#ff7a00", "#ffd600", "#ff5d00"];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.opacity = Math.random() * 0.7 + 0.3;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life--;
+      this.size = Math.max(0.1, this.size * 0.95);
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = (this.life / this.maxLife) * this.opacity;
+      ctx.shadowBlur = this.size * 1.5;
+      ctx.shadowColor = this.color;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  if (!isTouchDevice) {
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      for (let i = 0; i < 2; i++) {
+        particles.push(new TrailParticle(mouse.x, mouse.y));
+      }
+    });
+  } else {
+    window.addEventListener("touchstart", (e) => {
+      const touch = e.touches[0];
+      for (let i = 0; i < 12; i++) {
+        particles.push(new TrailParticle(touch.clientX, touch.clientY, 3));
+      }
+    }, { passive: true });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.update();
+      if (p.life <= 0 || p.size <= 0.2) {
+        particles.splice(i, 1);
+      } else {
+        p.draw();
+      }
+    }
+    
     requestAnimationFrame(animate);
   }
 

@@ -14,6 +14,7 @@
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
 
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,6 +24,9 @@
 </head>
 
 <body>
+
+  <!-- Screen-wide fixed overlay canvas for mouse cursor sparks trail -->
+  <canvas id="trailCanvas"></canvas>
 
   <!-- Background Canvas for Flame Embers -->
   <canvas id="emberCanvas" class="hero-canvas"></canvas>
@@ -64,10 +68,25 @@
   <section class="hero-section" id="home">
     <div class="hero-overlay"></div>
     <div class="hero-content">
+      <!-- Floating Chili Doodles -->
+      <div class="hero-doodles">
+        <div class="hero-doodle doodle-left">
+          <svg viewBox="0 0 24 24" width="50" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.84 2.6c-.67 1.5-1.97 2.6-3.48 3.1-2.92.9-5.5-.4-7.06-2.5C3.33 4.1 2.5 5.8 2.5 7.6c0 4.9 4 8.8 8.8 8.8 1.6 0 3.2-.4 4.5-1.3a8.85 8.85 0 0 0 4.1-6.2c0-1.6-.76-3.2-1.97-4.5l-3.1 1.8z" fill="#ff2e00"/>
+            <path d="M11.36 5.7c-.45-.9-1.16-1.6-2.05-2 .1-.7.5-1.3 1.16-1.7.45.45.9.9 1.07 1.5.17.6.09 1.4-.18 2.2z" fill="#00e676"/>
+          </svg>
+        </div>
+        <div class="hero-doodle doodle-right">
+          <svg viewBox="0 0 24 24" width="50" height="50" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1) rotate(15deg);">
+            <path d="M14.84 2.6c-.67 1.5-1.97 2.6-3.48 3.1-2.92.9-5.5-.4-7.06-2.5C3.33 4.1 2.5 5.8 2.5 7.6c0 4.9 4 8.8 8.8 8.8 1.6 0 3.2-.4 4.5-1.3a8.85 8.85 0 0 0 4.1-6.2c0-1.6-.76-3.2-1.97-4.5l-3.1 1.8z" fill="#ff7a00"/>
+            <path d="M11.36 5.7c-.45-.9-1.16-1.6-2.05-2 .1-.7.5-1.3 1.16-1.7.45.45.9.9 1.07 1.5.17.6.09 1.4-.18 2.2z" fill="#00e676"/>
+          </svg>
+        </div>
+      </div>
       <div class="hero-badge">
         <i class="fa-solid fa-fire"></i> Fresh & Fiery Tamil Nadu Street Vibe
       </div>
-      <h1 class="hero-title gradient-text neon-text-red">AAKOOO EATZZ</h1>
+      <h1 class="hero-title gradient-text">AAKOOO EATZZ</h1>
       <div class="hero-taglines">
         <span class="tagline-sub neon-text-orange">Feel The Heat!</span>
         <span class="tagline-main">Bold. Spicy. Addictive.</span>
@@ -85,6 +104,13 @@
       Scroll Down
       <i class="fa-solid fa-chevron-down"></i>
     </a>
+    
+    <!-- Flame Bottom Divider -->
+    <div class="flame-divider">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L0,60 L40,30 L80,75 L120,20 L160,85 L200,40 L240,65 L280,15 L320,80 L360,35 L400,60 L440,25 L480,85 L520,40 L560,70 L600,20 L640,80 L680,35 L720,65 L760,15 L800,85 L840,40 L880,70 L920,20 L960,80 L1000,35 L1040,65 L1080,20 L1120,80 L1160,40 L1200,60 L1200,120 L0,120 Z" fill="#0f0f12"></path>
+      </svg>
+    </div>
   </section>
 
   <!-- About Section -->
@@ -109,7 +135,7 @@
         <div class="about-highlights">
           <div class="highlight-card">
             <i class="fa-solid fa-pepper-hot" style="color: var(--color-red);"></i>
-            <h4>Original Erode Style</h4>
+            <h4>Original dir Style</h4>
             <p>Authentic recipes crafted with homemade spice pastes and fresh vegetables daily.</p>
           </div>
           <div class="highlight-card">
@@ -137,6 +163,13 @@
         </div>
       </div>
 
+    </div>
+    
+    <!-- Flame Bottom Divider -->
+    <div class="flame-divider">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L0,60 L40,30 L80,75 L120,20 L160,85 L200,40 L240,65 L280,15 L320,80 L360,35 L400,60 L440,25 L480,85 L520,40 L560,70 L600,20 L640,80 L680,35 L720,65 L760,15 L800,85 L840,40 L880,70 L920,20 L960,80 L1000,35 L1040,65 L1080,20 L1120,80 L1160,40 L1200,60 L1200,120 L0,120 Z" fill="#060606"></path>
+      </svg>
     </div>
   </section>
 
@@ -178,6 +211,12 @@
       <!-- Cards dynamically populated by JS -->
     </div>
 
+    <!-- Flame Bottom Divider -->
+    <div class="flame-divider">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L0,60 L40,30 L80,75 L120,20 L160,85 L200,40 L240,65 L280,15 L320,80 L360,35 L400,60 L440,25 L480,85 L520,40 L560,70 L600,20 L640,80 L680,35 L720,65 L760,15 L800,85 L840,40 L880,70 L920,20 L960,80 L1000,35 L1040,65 L1080,20 L1120,80 L1160,40 L1200,60 L1200,120 L0,120 Z" fill="#0f0f12"></path>
+      </svg>
+    </div>
   </section>
 
   <!-- Order / Plate Slide-out Drawer -->
