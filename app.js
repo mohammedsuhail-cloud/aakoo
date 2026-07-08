@@ -158,12 +158,16 @@ const backToTopBtn = document.getElementById("backToTopBtn");
 
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   loadPricesFromStorage();
   renderFilters();
   renderMenu();
   setupEmberCanvas();
   setupTrailCanvas();
   setupScrollTracking();
+  setupScrollReveal();
+  setupChatbot();
+  initPageLoader();
 });
 
 // --- LOCAL STORAGE PRICES ---
@@ -247,15 +251,18 @@ function renderMenu() {
     const tagClass = item.tag === "veg" ? "veg" : "non-veg";
     const tagText = item.tag === "veg" ? "Veg" : "Non-Veg";
 
+    const dietIndicator = `<span class="diet-dot-wrapper ${item.tag}"><span class="diet-dot"></span></span>`;
+
     card.innerHTML = `
       <div class="food-img-container">
-        <img src="${item.image}" alt="${item.name}" class="food-svg-graphic">
+        <img src="${item.image}" alt="${item.name}" class="food-svg-graphic" loading="lazy">
         <span class="spicy-badge">${chilis}</span>
         <span class="tag-badge ${tagClass}">${tagText}</span>
       </div>
       <div class="menu-card-body">
-        <h3 class="menu-item-title">${item.name}</h3>
+        <h3 class="menu-item-title">${dietIndicator}${item.name}</h3>
         <p class="menu-item-desc">${item.description}</p>
+        <div class="menu-card-divider"></div>
         <div class="menu-card-footer">
           <div class="price-container">
             <!-- Customer Mode Display -->
@@ -522,7 +529,7 @@ checkoutBtn.addEventListener("click", () => {
   window.open(whatsappUrl, "_blank");
 });
 
-// --- PARTICLE / EMBER EFFECT CANVAS ---
+// --- DUAL BACKGROUND PARTICLES & BURST EFFECT CANVAS ---
 function setupEmberCanvas() {
   const canvas = document.getElementById("emberCanvas");
   const ctx = canvas.getContext("2d");
@@ -536,67 +543,181 @@ function setupEmberCanvas() {
   });
 
   const particles = [];
-  const maxParticles = 60;
+  const maxParticles = 55;
 
   class Particle {
-    constructor() {
-      this.reset();
-      this.y = Math.random() * height; // Distribute vertically at start
+    constructor(x, y, isBurst = false) {
+      this.isBurst = isBurst;
+      if (isBurst) {
+        this.type = 'chilli';
+      } else {
+        this.type = Math.random() < 0.35 ? 'chilli' : 'gold-dust';
+      }
+      
+      this.reset(x, y);
+      
+      if (!isBurst && x === undefined && y === undefined) {
+        this.y = Math.random() * height;
+      }
     }
 
-    reset() {
-      this.x = Math.random() * width;
-      this.y = height + Math.random() * 20;
-      this.size = Math.random() * 3 + 1;
-      this.speedY = Math.random() * 1.5 + 0.5;
-      this.speedX = Math.random() * 1 - 0.5;
-      this.life = Math.random() * 150 + 50;
-      this.maxLife = this.life;
+    reset(x, y) {
+      this.x = x !== undefined ? x : Math.random() * width;
+      this.y = y !== undefined ? y : height + Math.random() * 40;
       
-      // Heat color palette (red/orange/yellow glow)
-      const colors = ["#ff2e00", "#ff7a00", "#ffd600", "#ff5d00"];
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.opacity = Math.random() * 0.5 + 0.3;
+      if (this.type === 'chilli') {
+        this.size = Math.random() * 5 + 4; // Width/height 4 to 9px
+        this.parallaxFactor = Math.random() * 0.15 + 0.35; // 0.35 to 0.5 (closer)
+        
+        // Build random irregular polygon coordinates (3-5 sides)
+        const numPoints = Math.floor(Math.random() * 3) + 3;
+        this.points = [];
+        const radius = this.size;
+        for (let i = 0; i < numPoints; i++) {
+          const theta = (i / numPoints) * Math.PI * 2 + (Math.random() * 0.4 - 0.2);
+          const r = radius * (0.6 + Math.random() * 0.4);
+          this.points.push({
+            x: Math.cos(theta) * r,
+            y: Math.sin(theta) * r
+          });
+        }
+        
+        if (this.isBurst) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 5 + 3;
+          this.speedX = Math.cos(angle) * speed;
+          this.speedY = Math.sin(angle) * speed - 1.5;
+          this.gravity = 0.08;
+          this.life = Math.random() * 35 + 25;
+          this.maxLife = this.life;
+        } else {
+          this.speedY = -(Math.random() * 0.5 + 0.2);
+          this.speedX = Math.random() * 0.6 - 0.3;
+          this.gravity = 0;
+          this.life = Math.random() * 200 + 100;
+          this.maxLife = this.life;
+        }
+        
+        this.angle = Math.random() * Math.PI * 2;
+        this.angularVelocity = Math.random() * 0.06 - 0.03;
+        
+        // Deep reds and maroons
+        const colors = ["#800020", "#5c0612", "#4a040b", "#901a1e", "#722f37"];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = Math.random() * 0.5 + 0.4;
+      } else {
+        // Gold dust
+        this.size = Math.random() * 1.8 + 0.8; // 0.8 to 2.6px
+        this.parallaxFactor = Math.random() * 0.1 + 0.1; // 0.1 to 0.2 (deeper)
+        this.speedY = -(Math.random() * 0.7 + 0.3);
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.gravity = 0;
+        
+        this.angle = 0;
+        this.angularVelocity = 0;
+        
+        const colors = ["#d4af37", "#f3e5ab", "#cca43b", "#ffecb3"];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = Math.random() * 0.4 + 0.2;
+      }
     }
 
     update() {
-      this.y -= this.speedY;
-      this.x += this.speedX;
-      this.life--;
-
-      if (this.life <= 0 || this.y < 0) {
-        this.reset();
+      if (this.type === 'chilli' && this.isBurst) {
+        this.speedY += this.gravity;
+        this.speedX *= 0.97;
+        this.speedY *= 0.97;
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.angle += this.angularVelocity * 1.8;
+        this.life--;
+      } else {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.angle += this.angularVelocity;
+        
+        // Wrap-around logic based on scroll position
+        const scrollOffset = window.scrollY * (1 - this.parallaxFactor);
+        const drawY = this.y + scrollOffset;
+        
+        if (drawY < -40 || this.y < -150) {
+          this.y = height + 40 - scrollOffset;
+          this.x = Math.random() * width;
+        }
       }
     }
 
     draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.globalAlpha = (this.life / this.maxLife) * this.opacity;
+      const scrollOffset = window.scrollY * (1 - this.parallaxFactor);
+      const drawY = this.y + scrollOffset;
       
-      // Shadow glow for embers
-      ctx.shadowBlur = this.size * 2;
-      ctx.shadowColor = this.color;
+      if (drawY < -50 || drawY > height + 50) return;
       
-      ctx.fill();
-      ctx.shadowBlur = 0; // reset
+      ctx.save();
+      ctx.translate(this.x, drawY);
+      
+      if (this.type === 'chilli') {
+        ctx.rotate(this.angle);
+        ctx.beginPath();
+        ctx.moveTo(this.points[0].x, this.points[0].y);
+        for (let i = 1; i < this.points.length; i++) {
+          ctx.lineTo(this.points[i].x, this.points[i].y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = this.color;
+        
+        if (this.isBurst) {
+          ctx.globalAlpha = Math.max(0, (this.life / this.maxLife) * this.opacity);
+        } else {
+          ctx.globalAlpha = this.opacity;
+        }
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.shadowBlur = this.size * 2;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+      }
+      ctx.restore();
     }
   }
 
-  // Populate particles
+  // Populate background particles
   for (let i = 0; i < maxParticles; i++) {
     particles.push(new Particle());
+  }
+
+  // Explore button hover burst listener
+  const exploreBtn = document.getElementById("exploreMenuBtn");
+  if (exploreBtn) {
+    exploreBtn.addEventListener("mouseenter", () => {
+      const btnRect = exploreBtn.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      const x = btnRect.left - canvasRect.left + btnRect.width / 2;
+      const y = btnRect.top - canvasRect.top + btnRect.height / 2;
+      
+      // Spawn 30 burst particles
+      for (let i = 0; i < 30; i++) {
+        particles.push(new Particle(x, y, true));
+      }
+    });
   }
 
   function animate() {
     ctx.clearRect(0, 0, width, height);
     
-    // Draw particles
-    particles.forEach(p => {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
       p.update();
-      p.draw();
-    });
+      if (p.isBurst && p.life <= 0) {
+        particles.splice(i, 1);
+      } else {
+        p.draw();
+      }
+    }
 
     requestAnimationFrame(animate);
   }
@@ -618,6 +739,7 @@ function setupTrailCanvas() {
   });
 
   const particles = [];
+  const fallingChilis = [];
   const mouse = { x: null, y: null };
   const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
@@ -627,94 +749,186 @@ function setupTrailCanvas() {
       this.y = y;
       this.isScrollParticle = isScrollParticle;
       
-      // Random base size (radius)
-      this.size = Math.random() * 2 + 2; 
-      
-      // Elongation stretch factor representing puffed rice (pori) grain
-      this.stretch = 1.3 + Math.random() * 0.5;
+      // Random length and thickness for elongated dash/streak
+      this.length = Math.random() * 12 + 8;
+      this.thickness = Math.random() * 1.5 + 1;
       
       // Spawning velocities
       if (isScrollParticle) {
-        // Falling grains: downwards speed with narrow sideways drift
-        this.vx = (Math.random() * 1.4 - 0.7) * speedMult;
-        this.vy = (Math.random() * 1.5 + 1.25) * speedMult;
+        // Falling spark particles: pointed downwards with slight spread
+        const angle = Math.PI / 2 + (Math.random() * 0.6 - 0.3);
+        const speed = (Math.random() * 1.5 + 1.25) * speedMult;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.gravity = 0.05;
       } else {
-        // Scattered mouse trail grains
-        this.vx = (Math.random() * 2.2 - 1.1) * speedMult;
-        this.vy = (Math.random() * 2.2 - 1.1) * speedMult - 0.2;
+        // Scattered mouse trail streaks moving outwards radially
+        const angle = Math.random() * Math.PI * 2;
+        const speed = (Math.random() * 2.5 + 1) * speedMult;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.gravity = 0;
       }
       
-      // Gravity settlement forces
-      this.gravity = isScrollParticle ? 0.08 : 0.03;
-      
-      // Rotation angles and speed for organic tumbling effect
-      this.angle = Math.random() * Math.PI * 2;
-      this.angularVelocity = Math.random() * 0.16 - 0.08;
-      
-      this.maxLife = Math.random() * 35 + 20;
+      // Lifetime in frames (approx 60 frames = 1 second)
+      this.maxLife = Math.random() * 20 + 50; 
       this.life = this.maxLife;
       
-      // Warm roasted puffed rice off-white/golden/amber palette
+      // Palette
       const colors = [
-        "rgba(255, 244, 214, 0.95)", // puffed rice off-white
-        "rgba(255, 226, 150, 0.95)", // toasted golden
-        "rgba(255, 170, 45, 0.95)",  // fiery amber
-        "rgba(255, 80, 0, 0.9)"       // hot ember orange
+        "#d4af37", // Gold
+        "#f3e5ab", // Light gold
+        "#800020", // Maroon
+        "#ff4500", // Fiery orange-red
+        "#ff8c00"  // Hot orange
       ];
       this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.glowColor = this.color.includes("255, 244") ? "rgba(255, 214, 0, 0.3)" : this.color;
       this.opacity = Math.random() * 0.6 + 0.4;
     }
 
     update() {
-      // Apply settlement forces
+      // Apply forces and velocity
       this.vy += this.gravity;
       this.x += this.vx;
       this.y += this.vy;
       
-      // Apply rotation tumbling
-      this.angle += this.angularVelocity;
+      // Drag/friction to slow down slightly
+      this.vx *= 0.97;
+      this.vy *= 0.97;
       
       this.life--;
-      this.size = Math.max(0.1, this.size * 0.96);
     }
 
     draw() {
       ctx.save();
       ctx.translate(this.x, this.y);
-      ctx.rotate(this.angle);
+      // Align dash along its direction of travel
+      ctx.rotate(Math.atan2(this.vy, this.vx));
       
       ctx.beginPath();
-      // Draw organic puffed rice grain shape using canvas ellipse
-      ctx.ellipse(0, 0, this.size * 0.55, this.size * this.stretch, 0, 0, Math.PI * 2);
+      // Draw a line/dash/streak
+      ctx.rect(-this.length / 2, -this.thickness / 2, this.length, this.thickness);
       
       ctx.fillStyle = this.color;
-      ctx.globalAlpha = (this.life / this.maxLife) * this.opacity;
+      ctx.globalAlpha = Math.max(0, (this.life / this.maxLife) * this.opacity);
       
-      ctx.shadowBlur = this.size * 1.5;
-      ctx.shadowColor = this.glowColor;
+      // Fiery neon glow shadow
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = this.color;
       
       ctx.fill();
       ctx.restore();
-      ctx.shadowBlur = 0;
+    }
+  }
+
+  class ChiliParticle {
+    constructor(titleRect) {
+      const scrollX = window.scrollX || window.pageXOffset;
+      const scrollY = window.scrollY || window.pageYOffset;
+      
+      // Random starting point along the width of the brand name text
+      this.x = (titleRect.left + scrollX) + Math.random() * titleRect.width;
+      
+      // Random starting point near top or bottom edge of heading letters
+      const spawnAtBottom = Math.random() < 0.5;
+      this.y = (titleRect.top + scrollY) + (spawnAtBottom ? titleRect.height : 0) + (Math.random() * 4 - 2);
+      
+      // Physics properties
+      this.vx = Math.random() * 0.6 - 0.3; // Slight sideways drift
+      this.vy = Math.random() * 0.8 + 0.4;  // Initial falling speed
+      this.gravity = Math.random() * 0.02 + 0.03; // Falling speed acceleration
+      
+      // Rotation properties for tumbling
+      this.angle = Math.random() * Math.PI * 2;
+      this.angularVelocity = (Math.random() * 0.02 + 0.015) * (Math.random() < 0.5 ? 1 : -1);
+      
+      // Randomize visual size scale
+      this.scale = Math.random() * 0.4 + 0.8;
+      
+      // Red/maroon palette matching theme
+      const colors = ["#800020", "#a31d1d", "#5c0612", "#b91c1c", "#962d2d"];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.opacity = 1.0;
+    }
+
+    update(heroBottomDocY) {
+      // Physics calculations
+      this.vy += this.gravity;
+      this.x += this.vx;
+      this.y += this.vy;
+      
+      // Rotation tumble
+      this.angle += this.angularVelocity;
+      
+      // Fade out past the bottom of the hero section
+      const fadeStart = heroBottomDocY - 120;
+      if (this.y > fadeStart) {
+        this.opacity = Math.max(0, 1 - (this.y - fadeStart) / 120);
+      }
+    }
+
+    draw() {
+      // Drawing relative to viewport because canvas is fixed position
+      const drawX = this.x - window.scrollX;
+      const drawY = this.y - window.scrollY;
+      
+      // Skip rendering if not visible on screen
+      if (drawY < -20 || drawY > height + 20 || drawX < -20 || drawX > width + 20) return;
+      
+      ctx.save();
+      ctx.translate(drawX, drawY);
+      ctx.rotate(this.angle);
+      ctx.scale(this.scale, this.scale);
+      ctx.globalAlpha = this.opacity;
+      
+      // Draw flat procedural chili body
+      ctx.beginPath();
+      ctx.moveTo(0, -7);
+      ctx.bezierCurveTo(4.5, -5.5, 6, 2, 1.5, 9.5);
+      ctx.quadraticCurveTo(0, 12, -0.75, 13.5); // Tip pointing down-left
+      ctx.bezierCurveTo(-2.25, 8.5, -4.5, 2, -3, -5.5);
+      ctx.closePath();
+      
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      
+      // Draw flat green stem
+      ctx.beginPath();
+      ctx.moveTo(-1, -6.5);
+      ctx.quadraticCurveTo(-1.5, -10.5, -4.5, -9);
+      ctx.strokeStyle = "#2e7d32";
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = "round";
+      ctx.stroke();
+      
+      ctx.restore();
     }
   }
 
   const scrollBtn = document.querySelector(".hero-scroll-btn");
+  const heroTitle = document.querySelector(".hero-title");
+  const heroSection = document.getElementById("home");
 
   if (!isTouchDevice) {
     window.addEventListener("mousemove", (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 4; i++) {
         particles.push(new TrailParticle(mouse.x, mouse.y));
       }
     });
   } else {
     window.addEventListener("touchstart", (e) => {
       const touch = e.touches[0];
-      for (let i = 0; i < 12; i++) {
-        particles.push(new TrailParticle(touch.clientX, touch.clientY, 3));
+      for (let i = 0; i < 15; i++) {
+        particles.push(new TrailParticle(touch.clientX, touch.clientY, 2));
+      }
+    }, { passive: true });
+
+    window.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      for (let i = 0; i < 2; i++) {
+        particles.push(new TrailParticle(touch.clientX, touch.clientY));
       }
     }, { passive: true });
   }
@@ -734,10 +948,37 @@ function setupTrailCanvas() {
       }
     }
 
+    // Spawn falling chilis from brand heading
+    if (heroTitle && heroSection) {
+      const heroRect = heroSection.getBoundingClientRect();
+      const scrollY = window.scrollY || window.pageYOffset;
+      const heroBottomDocY = heroRect.bottom + scrollY;
+      
+      // Only spawn when hero section is in view
+      if (heroRect.top < window.innerHeight && heroRect.bottom > 0) {
+        if (Math.random() < 0.05) { // 5% spawn rate per frame (approx 3 per sec)
+          const titleRect = heroTitle.getBoundingClientRect();
+          fallingChilis.push(new ChiliParticle(titleRect));
+        }
+      }
+      
+      // Update & Draw falling chilis
+      for (let i = fallingChilis.length - 1; i >= 0; i--) {
+        const chili = fallingChilis[i];
+        chili.update(heroBottomDocY);
+        if (chili.opacity <= 0 || chili.y > heroBottomDocY) {
+          fallingChilis.splice(i, 1);
+        } else {
+          chili.draw();
+        }
+      }
+    }
+
+    // Update & Draw cursor trail particles
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.update();
-      if (p.life <= 0 || p.size <= 0.2) {
+      if (p.life <= 0) {
         particles.splice(i, 1);
       } else {
         p.draw();
@@ -811,4 +1052,258 @@ function setupScrollTracking() {
   backToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
+}
+
+// --- THEME TOGGLE CONTROL ---
+function initTheme() {
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
+  if (!themeToggleBtn) return;
+  
+  const savedTheme = localStorage.getItem("aakooo_eatzz_theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  updateThemeToggleIcon(savedTheme);
+  
+  themeToggleBtn.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    
+    // Add transition class to body/html for smooth transition
+    document.body.classList.add("theme-transitioning");
+    
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("aakooo_eatzz_theme", newTheme);
+    updateThemeToggleIcon(newTheme);
+    
+    setTimeout(() => {
+      document.body.classList.remove("theme-transitioning");
+    }, 500); // matches the CSS transition time
+  });
+}
+
+function updateThemeToggleIcon(theme) {
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
+  if (!themeToggleBtn) return;
+  
+  const icon = themeToggleBtn.querySelector("i");
+  if (!icon) return;
+  
+  if (theme === "dark") {
+    icon.className = "fa-solid fa-sun";
+  } else {
+    icon.className = "fa-solid fa-moon";
+  }
+}
+
+// --- SCROLL REVEAL UTILITY ---
+function setupScrollReveal() {
+  const sections = document.querySelectorAll(".about-section, .menu-section, .contact-section");
+  
+  const observerOptions = {
+    root: null,
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  sections.forEach(section => {
+    section.classList.add("reveal-section");
+    observer.observe(section);
+  });
+}
+
+// --- PAGE LOADER TRANSITION ---
+function initPageLoader() {
+  const loaderScreen = document.getElementById("loaderScreen");
+  if (loaderScreen) {
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        loaderScreen.classList.add("fade-out");
+      }, 600); // 600ms loader screen display time
+    });
+  }
+}
+
+// --- CUSTOMER CHATBOT ASSISTANT ---
+function setupChatbot() {
+  const chatbotToggle = document.getElementById("chatbotToggle");
+  const chatCloseBtn = document.getElementById("chatCloseBtn");
+  const chatWindow = document.getElementById("chatWindow");
+  const chatInput = document.getElementById("chatInput");
+  const chatSendBtn = document.getElementById("chatSendBtn");
+  const chatBody = document.getElementById("chatBody");
+  
+  if (!chatbotToggle || !chatCloseBtn || !chatWindow) return;
+
+  // Toggle Chat window
+  chatbotToggle.addEventListener("click", () => {
+    chatWindow.classList.add("open");
+  });
+  
+  chatCloseBtn.addEventListener("click", () => {
+    chatWindow.classList.remove("open");
+  });
+
+  // Handle Quick Reply Clicks
+  chatBody.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.classList.contains("quick-reply-btn")) {
+      const action = target.getAttribute("data-action");
+      const label = target.textContent;
+      
+      // User message
+      addMessage(label, "user");
+      
+      setTimeout(() => {
+        handleAction(action);
+      }, 400);
+    }
+  });
+
+  // Handle User Input Text Send
+  chatSendBtn.addEventListener("click", sendUserMessage);
+  chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      sendUserMessage();
+    }
+  });
+
+  function sendUserMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    
+    addMessage(text, "user");
+    chatInput.value = "";
+    
+    setTimeout(() => {
+      handleTextResponse(text);
+    }, 450);
+  }
+
+  function addMessage(text, sender, isHTML = false) {
+    const messageDiv = document.createElement("div");
+    messageDiv.className = `chat-message ${sender}`;
+    
+    const bubble = document.createElement("div");
+    bubble.className = "chat-bubble";
+    
+    if (isHTML) {
+      bubble.innerHTML = text;
+    } else {
+      bubble.textContent = text;
+    }
+    
+    messageDiv.appendChild(bubble);
+    
+    // Remove old quick reply container before inserting user message
+    const quickReplies = chatBody.querySelector(".chat-quick-replies");
+    if (quickReplies && sender === "user") {
+      chatBody.insertBefore(messageDiv, quickReplies);
+      quickReplies.remove();
+    } else {
+      chatBody.appendChild(messageDiv);
+    }
+    
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function handleAction(action) {
+    let responseText = "";
+    let isHTML = false;
+
+    switch (action) {
+      case "menu":
+        responseText = "<strong>🔥 AAKOOO EATZZ MENU:</strong><br>" + 
+                       menuItems.map(item => `• ${item.name}: ₹${item.price.toFixed(2)}`).join("<br>");
+        isHTML = true;
+        break;
+      case "timings":
+        responseText = "🕒 <strong>Operating Hours:</strong><br>Monday - Sunday: 4:00 PM - 11:30 PM<br>(Best street vibe around 8:00 PM!)";
+        isHTML = true;
+        break;
+      case "location":
+        responseText = "📍 <strong>Find Us:</strong><br>12/4 Spicy Street, Near Food Market, Erode, Tamil Nadu, 636001";
+        isHTML = true;
+        break;
+      case "order":
+        responseText = "To place an order, click below to chat with us on WhatsApp!<br>" + 
+                       `<a href="https://wa.me/919384412751?text=Hi,%20I'd%20like%20to%20place%20an%20order%20from%20Aakooo%20Eatzz" target="_blank" class="chat-whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</a>`;
+        isHTML = true;
+        break;
+      case "contact":
+        responseText = "📞 <strong>Contact Details:</strong><br>Phone: +91 9384412751<br>Email: aakooeatzz@gmail.com";
+        isHTML = true;
+        break;
+    }
+    
+    addMessage(responseText, "bot", isHTML);
+    showQuickReplies();
+  }
+
+  function handleTextResponse(text) {
+    const cleanText = text.toLowerCase();
+    let responseText = "";
+    let isHTML = false;
+    
+    if (cleanText.includes("menu") || cleanText.includes("price") || cleanText.includes("food") || cleanText.includes("eat")) {
+      responseText = "<strong>🔥 AAKOOO EATZZ MENU:</strong><br>" + 
+                     menuItems.map(item => `• ${item.name}: ₹${item.price.toFixed(2)}`).join("<br>");
+      isHTML = true;
+    } else if (cleanText.includes("timing") || cleanText.includes("hours") || cleanText.includes("open") || cleanText.includes("close")) {
+      responseText = "🕒 <strong>Operating Hours:</strong><br>Monday - Sunday: 4:00 PM - 11:30 PM<br>(Best street vibe around 8:00 PM!)";
+      isHTML = true;
+    } else if (cleanText.includes("location") || cleanText.includes("find") || cleanText.includes("where") || cleanText.includes("address")) {
+      responseText = "📍 <strong>Find Us:</strong><br>12/4 Spicy Street, Near Food Market, Erode, Tamil Nadu, 636001";
+      isHTML = true;
+    } else if (cleanText.includes("order") || cleanText.includes("buy") || cleanText.includes("whatsapp")) {
+      responseText = "To place an order, click below to chat with us on WhatsApp!<br>" + 
+                     `<a href="https://wa.me/919384412751?text=Hi,%20I'd%20like%20to%20place%20an%20order%20from%20Aakooo%20Eatzz" target="_blank" class="chat-whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</a>`;
+      isHTML = true;
+    } else if (cleanText.includes("contact") || cleanText.includes("phone") || cleanText.includes("email") || cleanText.includes("number")) {
+      responseText = "📞 <strong>Contact Details:</strong><br>Phone: +91 9384412751<br>Email: aakooeatzz@gmail.com";
+      isHTML = true;
+    } else {
+      responseText = "I'm not sure I understand that. 🌶️ You can ask about our menu, timings, location, contact, or click below to chat with us directly on WhatsApp:<br>" + 
+                     `<a href="https://wa.me/919384412751?text=Hi,%20I'd%20like%20to%20place%20an%20order%20from%20Aakooo%20Eatzz" target="_blank" class="chat-whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>`;
+      isHTML = true;
+    }
+    
+    addMessage(responseText, "bot", isHTML);
+    showQuickReplies();
+  }
+
+  function showQuickReplies() {
+    const oldReplies = chatBody.querySelector(".chat-quick-replies");
+    if (oldReplies) oldReplies.remove();
+    
+    const container = document.createElement("div");
+    container.className = "chat-quick-replies";
+    container.id = "chatQuickReplies";
+    
+    const buttons = [
+      { action: "menu", text: "View Menu" },
+      { action: "timings", text: "Shop Timings" },
+      { action: "location", text: "Location" },
+      { action: "order", text: "Place an Order" },
+      { action: "contact", text: "Contact Us" }
+    ];
+    
+    buttons.forEach(btn => {
+      const button = document.createElement("button");
+      button.className = "quick-reply-btn";
+      button.setAttribute("data-action", btn.action);
+      button.textContent = btn.text;
+      container.appendChild(button);
+    });
+    
+    chatBody.appendChild(container);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
 }

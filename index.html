@@ -12,9 +12,7 @@
     content="street food, Thattu Vadai, Norukkal, Aakooo Eatzz, Erode food, spicy food, Indian street food">
 
   <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,6 +22,19 @@
 </head>
 
 <body>
+
+  <!-- Premium Loader Screen -->
+  <div class="loader-screen" id="loaderScreen">
+    <div class="loader-content">
+      <div class="loader-fire-logo">
+        <i class="fa-solid fa-fire-flame-curved"></i>
+      </div>
+      <div class="loader-bar-container">
+        <div class="loader-bar"></div>
+      </div>
+      <span class="loader-text">AAKOOO EATZZ</span>
+    </div>
+  </div>
 
   <!-- Screen-wide fixed overlay canvas for mouse cursor sparks trail -->
   <canvas id="trailCanvas"></canvas>
@@ -48,6 +59,11 @@
       </nav>
 
       <div class="nav-actions">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Theme" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
         <!-- My Plate Icon Badge -->
         <button class="plate-count-badge" id="plateBadgeBtn" aria-label="Open Plate Summary" title="Your Plate">
           <i class="fa-solid fa-fire-flame-curved"></i>
@@ -87,12 +103,15 @@
         <i class="fa-solid fa-fire"></i> Fresh & Fiery Tamil Nadu Street Vibe
       </div>
       <h1 class="hero-title gradient-text">AAKOOO EATZZ</h1>
-      <div class="hero-taglines">
-        <span class="tagline-sub neon-text-orange">Feel The Heat!</span>
-        <span class="tagline-main">Bold. Spicy. Addictive.</span>
+      <div class="hero-taglines-wrapper">
+        <div class="hero-taglines">
+          <span class="tagline-sub neon-text-orange">Feel The Heat!</span>
+          <span class="tagline-main">Bold. Spicy. Addictive.</span>
+        </div>
+        <img src="assets/crunch-burn-repeat.png" alt="Crunch. Burn. Repeat! Sticker" class="sticker-badge" loading="lazy">
       </div>
       <div class="hero-ctas">
-        <a href="#menu" class="btn btn-primary">
+        <a href="#menu" class="btn btn-primary" id="exploreMenuBtn">
           <i class="fa-solid fa-pepper-hot"></i> Explore Menu
         </a>
         <a href="#about" class="btn btn-secondary">
@@ -175,6 +194,10 @@
 
   <!-- Menu Section -->
   <section class="menu-section section-padding" id="menu">
+
+    <div class="menu-signboard-container">
+      <img src="assets/eat-like-a-saiyan.png" alt="Eat Like a Saiyan Signboard" class="menu-signboard" loading="lazy">
+    </div>
 
     <div class="section-header">
       <h2 class="gradient-text neon-text-orange">The Hot Spot Menu</h2>
@@ -382,6 +405,54 @@
   <button class="back-to-top" id="backToTopBtn" aria-label="Back to Top">
     <i class="fa-solid fa-arrow-up"></i>
   </button>
+
+  <!-- Chatbot Widget -->
+  <div class="chatbot-container" id="chatbotContainer">
+    <!-- Chat Widget Toggle Button -->
+    <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open Chat Assistant">
+      <i class="fa-solid fa-fire-flame-curved"></i>
+    </button>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <span class="chat-header-icon"><i class="fa-solid fa-fire"></i></span>
+          <div style="text-align: left;">
+            <h4>Aakooo Eatzz Assistant</h4>
+            <span class="chat-status">Online • Instant Help</span>
+          </div>
+        </div>
+        <button class="chat-close-btn" id="chatCloseBtn" aria-label="Close Chat">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="chat-body" id="chatBody">
+        <div class="chat-message bot">
+          <div class="chat-bubble">
+            Vanakkam! How can I help you today?
+          </div>
+        </div>
+        <div class="chat-quick-replies" id="chatQuickReplies">
+          <button class="quick-reply-btn" data-action="menu">View Menu</button>
+          <button class="quick-reply-btn" data-action="timings">Shop Timings</button>
+          <button class="quick-reply-btn" data-action="location">Location</button>
+          <button class="quick-reply-btn" data-action="order">Place an Order</button>
+          <button class="quick-reply-btn" data-action="contact">Contact Us</button>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="chat-footer">
+        <input type="text" id="chatInput" placeholder="Ask about menu, timings, order..." aria-label="Chat message input">
+        <button class="chat-send-btn" id="chatSendBtn" aria-label="Send Message">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- JavaScript Interaction Script -->
   <script src="app.js"></script>
