@@ -1111,46 +1111,12 @@ body::before {
 .menu-item-desc {
   font-size: 0.85rem;
   color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0; /* Removed bottom margin since the footer button is removed */
   flex-grow: 1;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.menu-card-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: auto;
-  border-top: 1px dashed #23232f;
-  padding-top: 1.25rem;
-}
-
-.add-to-plate-btn {
-  background: #23232f;
-  border: none;
-  color: var(--color-white);
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 0.5rem;
-  transition: var(--transition-fast);
-}
-.add-to-plate-btn:hover {
-  background: var(--color-red);
-  box-shadow: var(--neon-red);
-}
-.add-to-plate-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 
 /* --- PLATE / CART DRAWER --- */

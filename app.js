@@ -128,7 +128,7 @@ const DEFAULT_MENU_ITEMS = [
     spicyLevel: 4,
     price: 45.00,
     tag: "veg",
-    image: "assets/kara_poori.png"
+    image: "assets/kara-poori.png"
   }
 ];
 
@@ -231,22 +231,10 @@ function renderMenu() {
       <div class="menu-card-body">
         <h3 class="menu-item-title">${dietIndicator}${item.name}</h3>
         <p class="menu-item-desc">${item.description}</p>
-        <div class="menu-card-divider"></div>
-        <div class="menu-card-footer">
-          <button class="add-to-plate-btn" id="add-btn-${item.id}">
-            <i class="fa-solid fa-plus"></i> Add
-          </button>
-        </div>
       </div>
     `;
 
     menuGrid.appendChild(card);
-
-    // Add button click
-    const addBtn = card.querySelector(`.add-to-plate-btn`);
-    addBtn.addEventListener("click", () => {
-      addToPlate(item.id);
-    });
   });
 }
 
