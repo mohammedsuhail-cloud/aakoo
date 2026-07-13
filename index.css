@@ -2239,3 +2239,117 @@ body::before {
   }
 }
 
+
+/* =========================================
+   PWA INSTALL UI
+   ========================================= */
+
+/* --- iOS Install Banner (bottom slide-up) --- */
+.ios-install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem 1.5rem; /* extra bottom for iOS safe area */
+  background: linear-gradient(to top, rgba(6,6,6,0.97) 60%, rgba(20,20,20,0.95));
+  border-top: 2px solid rgba(255, 46, 0, 0.5);
+  box-shadow: 0 -8px 30px rgba(255, 46, 0, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: bannerSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes bannerSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+.ios-banner-icon img {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 46, 0, 0.4);
+  box-shadow: 0 0 12px rgba(255, 46, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.ios-banner-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.ios-banner-text strong {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-white);
+}
+
+.ios-banner-text .fa-arrow-up-from-bracket {
+  color: var(--color-orange);
+}
+
+.ios-banner-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.ios-banner-close:hover {
+  color: var(--color-white);
+}
+
+/* --- Android Install Button (floating FAB) --- */
+.android-install-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.35rem;
+  background: var(--fiery-gradient, linear-gradient(135deg, #ff2e00, #ff7a00));
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 46, 0, 0.55);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fabBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.android-install-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(255, 46, 0, 0.7);
+}
+
+@keyframes fabBounceIn {
+  from { transform: scale(0) translateY(20px); opacity: 0; }
+  to   { transform: scale(1) translateY(0);    opacity: 1; }
+}
+
+/* --- Standalone body padding for iOS safe area --- */
+@media (display-mode: standalone) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}

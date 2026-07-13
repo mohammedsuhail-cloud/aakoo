@@ -4,12 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aakooo Eatzz | Extreme Erode Street Food & Spicy Heat</title>
+  <title>Aakooo Eatzz | Extreme Erode Street Food &amp; Spicy Heat</title>
   <!-- Meta description for SEO -->
   <meta name="description"
     content="Feel the heat at Aakooo Eatzz! Erode's authentic, bold, and fiery street food. Serving Thattu Vadai Set, Norukkal, Mutta Burger, and extreme spicy flavors.">
   <meta name="keywords"
     content="street food, Thattu Vadai, Norukkal, Aakooo Eatzz, Erode food, spicy food, Indian street food">
+
+  <!-- ===== PWA MANIFEST ===== -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff2e00">
+
+  <!-- ===== iOS PWA SUPPORT ===== -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Aakooo Eatzz">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Standard favicon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
   <!-- Preconnect for performance -->
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -448,6 +461,84 @@
 
   <!-- JavaScript Interaction Script -->
   <script src="app.js"></script>
+
+  <!-- ===== iOS INSTALL BANNER ===== -->
+  <!-- Shown only on iOS Safari when NOT already installed as PWA -->
+  <div id="iosInstallBanner" class="ios-install-banner" role="dialog" aria-label="Install app prompt" style="display:none;">
+    <button class="ios-banner-close" id="iosInstallClose" aria-label="Dismiss install banner">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="ios-banner-icon">
+      <img src="icons/apple-touch-icon.png" alt="Aakooo Eatzz icon">
+    </div>
+    <div class="ios-banner-text">
+      <strong>Install Aakooo Eatzz</strong>
+      <span>Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> Share, then <strong>"Add to Home Screen"</strong> to install this app!</span>
+    </div>
+  </div>
+
+  <!-- ===== ANDROID INSTALL BUTTON ===== -->
+  <!-- Shown only on Android when beforeinstallprompt fires -->
+  <button id="androidInstallBtn" class="android-install-btn" aria-label="Install app" style="display:none;">
+    <i class="fa-solid fa-download"></i> Install App
+  </button>
+
+  <!-- ===== PWA: Service Worker Registration + Install Logic ===== -->
+  <script>
+    // --- Service Worker Registration ---
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('[PWA] Service Worker registered. Scope:', reg.scope))
+          .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+      });
+    }
+
+    // --- Android: Intercept beforeinstallprompt ---
+    let deferredPrompt = null;
+    const androidInstallBtn = document.getElementById('androidInstallBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      androidInstallBtn.style.display = 'flex';
+    });
+
+    androidInstallBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log('[PWA] Install outcome:', outcome);
+      deferredPrompt = null;
+      androidInstallBtn.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('[PWA] App installed!');
+      androidInstallBtn.style.display = 'none';
+      deferredPrompt = null;
+    });
+
+    // --- iOS: Show install banner if applicable ---
+    const iosInstallBanner = document.getElementById('iosInstallBanner');
+    const iosInstallClose = document.getElementById('iosInstallClose');
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    const hasDismissedIOSBanner = localStorage.getItem('aakooo_ios_banner_dismissed');
+
+    if (isIOS && !isInStandaloneMode && !hasDismissedIOSBanner) {
+      // Delay banner slightly so it doesn't flash during load
+      setTimeout(() => {
+        iosInstallBanner.style.display = 'flex';
+      }, 3000);
+    }
+
+    iosInstallClose.addEventListener('click', () => {
+      iosInstallBanner.style.display = 'none';
+      localStorage.setItem('aakooo_ios_banner_dismissed', '1');
+    });
+  </script>
 </body>
 
 </html>
