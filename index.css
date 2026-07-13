@@ -299,7 +299,6 @@ body::before {
   font-size: 1rem;
 }
 
-/* --- NAVIGATION BAR --- */
 .header-nav {
   position: fixed;
   top: 0;
@@ -307,14 +306,16 @@ body::before {
   width: 100%;
   z-index: 1000;
   transition: var(--transition-normal);
-  border-bottom: 1px solid transparent;
+  background: linear-gradient(to bottom, #060606 80%, rgba(255, 46, 0, 0.15) 100%);
+  border-bottom: 2px solid rgba(255, 46, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(255, 46, 0, 0.25);
 }
 .header-nav.scrolled {
-  background: rgba(6, 6, 6, 0.85);
+  background: linear-gradient(to bottom, rgba(6, 6, 6, 0.95) 85%, rgba(255, 46, 0, 0.25) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 46, 0, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid rgba(255, 46, 0, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 46, 0, 0.2);
   padding: 0.75rem 0;
 }
 .nav-container {
@@ -995,64 +996,7 @@ body::before {
   box-shadow: 0 4px 15px rgba(255, 122, 0, 0.4);
 }
 
-/* OWNER MODE CONTROL BAR */
-.owner-panel {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(255, 46, 0, 0.05);
-  border: 1px dashed rgba(255, 46, 0, 0.3);
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
-  margin-top: 0.5rem;
-}
-.owner-toggle-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  user-select: none;
-}
-.owner-toggle-switch {
-  position: relative;
-  width: 50px;
-  height: 26px;
-  background: #23232f;
-  border-radius: 50px;
-  transition: var(--transition-normal);
-}
-.owner-toggle-switch::after {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 20px;
-  height: 20px;
-  background: var(--color-text-muted);
-  border-radius: 50%;
-  transition: var(--transition-normal);
-}
-input#ownerModeToggle {
-  display: none;
-}
-input#ownerModeToggle:checked + .owner-toggle-switch {
-  background: var(--color-red);
-  box-shadow: 0 0 10px rgba(255, 46, 0, 0.5);
-}
-input#ownerModeToggle:checked + .owner-toggle-switch::after {
-  transform: translateX(24px);
-  background: var(--color-white);
-}
-.owner-label {
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-input#ownerModeToggle:checked ~ .owner-label {
-  color: var(--color-red);
-  text-shadow: var(--neon-red);
-}
+
 
 /* MENU GRID */
 .menu-grid {
@@ -1177,70 +1121,26 @@ input#ownerModeToggle:checked ~ .owner-label {
 
 .menu-card-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-top: auto;
   border-top: 1px dashed #23232f;
   padding-top: 1.25rem;
-  gap: 1rem;
-}
-
-/* PRICE AREA & EDITING */
-.price-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.price-display {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--color-yellow);
-}
-.price-display.blank {
-  color: var(--color-text-dim);
-  font-size: 0.9rem;
-  font-style: italic;
-  font-weight: 500;
-}
-.price-input-wrapper {
-  display: none;
-}
-.price-input {
-  width: 70px;
-  background: var(--bg-primary);
-  border: 1px solid var(--color-red);
-  border-radius: 6px;
-  padding: 0.4rem 0.5rem;
-  color: var(--color-yellow);
-  font-weight: 800;
-  font-size: 1.1rem;
-  text-align: center;
-  outline: none;
-}
-.price-input:focus {
-  box-shadow: 0 0 8px var(--color-red);
-  border-color: var(--color-yellow);
-}
-
-/* OWNER MODE CARD ADJUSTMENT */
-.owner-active .price-input-wrapper {
-  display: block;
-}
-.owner-active .price-display {
-  display: none;
 }
 
 .add-to-plate-btn {
   background: #23232f;
   border: none;
   color: var(--color-white);
-  padding: 0.6rem 1.1rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   gap: 0.5rem;
   transition: var(--transition-fast);
 }
@@ -2007,7 +1907,7 @@ input#ownerModeToggle:checked ~ .owner-label {
 }
 
 /* Interactive elements depth & borders */
-.btn, .menu-card, .contact-card, .highlight-card, .about-overlay-card, .plate-drawer, .price-input, .menu-search, .form-input, .form-textarea {
+.btn, .menu-card, .contact-card, .highlight-card, .about-overlay-card, .plate-drawer, .menu-search, .form-input, .form-textarea {
   border-radius: 12px !important; /* Rounded corners */
 }
 .btn-primary {
