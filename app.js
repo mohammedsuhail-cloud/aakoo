@@ -167,7 +167,8 @@ const backToTopBtn = document.getElementById("backToTopBtn");
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
   renderFilters();
-  renderMenu();
+  setupDatabaseMenu();
+  setupContactForm();
   setupEmberCanvas();
   setupTrailCanvas();
   setupScrollTracking();
@@ -1161,4 +1162,73 @@ function setupChatbot() {
     chatBody.appendChild(container);
     chatBody.scrollTop = chatBody.scrollHeight;
   }
+}
+
+// ==========================================
+// AAKOOO EATZZ - Firestore Database Integration
+// ==========================================
+function setupDatabaseMenu() {
+  if (typeof useFirebase !== "undefined" && useFirebase && db) {
+    db.collection("menuItems").onSnapshot((snapshot) => {
+      if (!snapshot.empty) {
+        const items = [];
+        snapshot.forEach((doc) => {
+          items.push({ id: doc.id, ...doc.data() });
+        });
+        menuItems = items;
+        renderMenu();
+      } else {
+        console.log("[Firebase] Menu collection is empty. Seeding defaults...");
+        DEFAULT_MENU_ITEMS.forEach((item) => {
+          db.collection("menuItems").doc(item.id).set(item)
+            .catch(err => console.error("Error seeding:", err));
+        });
+        menuItems = [...DEFAULT_MENU_ITEMS];
+        renderMenu();
+      }
+    }, (error) => {
+      console.error("[Firebase] Error fetching menu items:", error);
+      menuItems = [...DEFAULT_MENU_ITEMS];
+      renderMenu();
+    });
+  } else {
+    menuItems = [...DEFAULT_MENU_ITEMS];
+    renderMenu();
+  }
+}
+
+function setupContactForm() {
+  const contactForm = document.getElementById("contactForm");
+  if (!contactForm) return;
+
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("formName").value;
+    const email = document.getElementById("formEmail").value;
+    const subject = document.getElementById("formSubject").value;
+    const message = document.getElementById("formMessage").value;
+
+    if (typeof useFirebase !== "undefined" && useFirebase && db) {
+      db.collection("messages").add({
+        name: name,
+        email: email,
+        subject: subject,
+        message: message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        status: "unread"
+      })
+      .then(() => {
+        alert("🔥 Your fiery feedback has been submitted! Thank you!");
+        contactForm.reset();
+      })
+      .catch((error) => {
+        console.error("Error writing feedback to Firestore:", error);
+        alert("Oops! Could not save to database, but thank you for your feedback!");
+      });
+    } else {
+      alert(`🔥 Local Mode: Review submitted!\nName: ${name}\nSpiciness: ${subject}\nMessage: ${message}`);
+      contactForm.reset();
+    }
+  });
 }

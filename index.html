@@ -319,10 +319,8 @@
         </div>
       </div>
 
-      <!-- Contact Form Container -->
       <div class="contact-form-container">
-        <form class="contact-form" id="contactForm"
-          onsubmit="event.preventDefault(); alert('🔥 Your fiery review has been submitted! Thank you!'); this.reset();">
+        <form class="contact-form" id="contactForm">
           <h3>Send Feedback</h3>
           <div class="form-grid">
             <div class="form-group">
@@ -458,6 +456,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Firebase SDKs (Compat v9) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
   <!-- JavaScript Interaction Script -->
   <script src="app.js"></script>
