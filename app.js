@@ -119,6 +119,16 @@ const DEFAULT_MENU_ITEMS = [
     price: 70.00,
     tag: "non-veg",
     image: "assets/chicken_puri_norukkal.png"
+  },
+  {
+    id: "kara-poori",
+    name: "Kara Poori",
+    description: "Crispy golden-fried pooris tossed in a fiery, aromatic masala spice blend, garnished with fresh coriander, and served hot.",
+    category: "snacks",
+    spicyLevel: 4,
+    price: 45.00,
+    tag: "veg",
+    image: "assets/kara_poori.png"
   }
 ];
 
@@ -256,8 +266,6 @@ function renderMenu() {
     card.innerHTML = `
       <div class="food-img-container">
         <img src="${item.image}" alt="${item.name}" class="food-svg-graphic" loading="lazy">
-        <span class="spicy-badge">${chilis}</span>
-        <span class="tag-badge ${tagClass}">${tagText}</span>
       </div>
       <div class="menu-card-body">
         <h3 class="menu-item-title">${dietIndicator}${item.name}</h3>
@@ -601,8 +609,8 @@ function setupEmberCanvas() {
         this.angle = Math.random() * Math.PI * 2;
         this.angularVelocity = Math.random() * 0.06 - 0.03;
         
-        // Deep reds and maroons
-        const colors = ["#800020", "#5c0612", "#4a040b", "#901a1e", "#722f37"];
+        // Warm fire orange-red and gold embers
+        const colors = ["#ff2e00", "#ff4500", "#ff7a00", "#ff8c00", "#ff5d00"];
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.opacity = Math.random() * 0.5 + 0.4;
       } else {
@@ -616,7 +624,7 @@ function setupEmberCanvas() {
         this.angle = 0;
         this.angularVelocity = 0;
         
-        const colors = ["#d4af37", "#f3e5ab", "#cca43b", "#ffecb3"];
+        const colors = ["#ffd600", "#ffcc00", "#ffa000", "#ffb300", "#ffecb3"];
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.opacity = Math.random() * 0.4 + 0.2;
       }
@@ -776,11 +784,11 @@ function setupTrailCanvas() {
       
       // Palette
       const colors = [
-        "#d4af37", // Gold
-        "#f3e5ab", // Light gold
-        "#800020", // Maroon
-        "#ff4500", // Fiery orange-red
-        "#ff8c00"  // Hot orange
+        "#ff2e00", // Vivid fire orange-red
+        "#ff7a00", // Hot orange
+        "#ffd600", // Warm golden yellow
+        "#ffb300", // Gold
+        "#ff4500"  // Orange-red
       ];
       this.color = colors[Math.floor(Math.random() * colors.length)];
       this.opacity = Math.random() * 0.6 + 0.4;
@@ -845,8 +853,8 @@ function setupTrailCanvas() {
       // Randomize visual size scale
       this.scale = Math.random() * 0.4 + 0.8;
       
-      // Red/maroon palette matching theme
-      const colors = ["#800020", "#a31d1d", "#5c0612", "#b91c1c", "#962d2d"];
+      // Red palette matching theme
+      const colors = ["#ff2e00", "#d50000", "#c62828", "#b71c1c", "#e53935"];
       this.color = colors[Math.floor(Math.random() * colors.length)];
       this.opacity = 1.0;
     }
